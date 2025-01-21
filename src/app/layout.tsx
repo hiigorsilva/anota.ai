@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { RootProviders } from '@/providers'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const inter = Inter({
   subsets: ['latin-ext'],
@@ -24,8 +26,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${inter.className} antialiased`}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="pt-BR" suppressHydrationWarning>
+        <body
+          className={`${inter.className} min-h-dvh w-full flex flex-col antialiased`}
+        >
+          <RootProviders>
+            <div className="flex-1 h-full w-full">{children}</div>
+          </RootProviders>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
