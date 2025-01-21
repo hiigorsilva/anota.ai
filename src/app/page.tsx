@@ -1,3 +1,4 @@
+import { Navbar } from '@/components/navbar'
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 
@@ -8,7 +9,8 @@ const Home = async () => {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh w-full justify-center items-center">
+    <div className="flex flex-col min-h-dvh w-full">
+      <Navbar />
       Olá {user?.firstName} 😉
     </div>
   )
