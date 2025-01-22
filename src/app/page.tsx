@@ -11,7 +11,6 @@ const Home = async () => {
   return (
     <div className="flex flex-col min-h-dvh w-full">
       <Navbar />
-      Olá {user?.firstName} 😉
     </div>
   )
 }
