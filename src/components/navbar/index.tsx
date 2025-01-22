@@ -1,30 +1,31 @@
-import { UserButton } from '@clerk/nextjs'
 import { ContainerApp } from '../container-app'
-import { Logo } from '../logo'
-import { ToggleTheme } from '../toggle-theme'
-import { Separator } from '../ui/separator'
-import { LinkRow } from './link-row'
-import { navLinks } from './links'
+import { Search } from '../search'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
+import { ProfileButton } from './profile-button'
+import { TeamSwitcher } from './team-switcher'
 
 export const Navbar = () => {
   return (
     <header className="w-full h-16 border-b">
       <ContainerApp className="flex justify-between items-center gap-8">
-        <div className="flex items-center gap-8">
-          <Logo className="scale-90" />
-
-          <Separator orientation="vertical" />
-
-          <nav className="w-fit flex justify-between items-center gap-8">
-            {navLinks.map(link => (
-              <LinkRow key={link.name} link={link} />
-            ))}
-          </nav>
-        </div>
+        <TeamSwitcher />
 
         <div className="flex items-center gap-4">
-          <ToggleTheme />
-          <UserButton />
+          <Search className="w-fit" />
+
+          {/* PROFILE BUTTON */}
+          <ProfileButton>
+            <Button variant="ghost">
+              <Avatar className="size-8">
+                <AvatarImage
+                  src="http://avatar.vercel.sh/higor.png"
+                  alt="Higor Silva"
+                />
+                <AvatarFallback>H</AvatarFallback>
+              </Avatar>
+            </Button>
+          </ProfileButton>
         </div>
       </ContainerApp>
     </header>
