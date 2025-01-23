@@ -19,7 +19,7 @@ import { navLinks } from './links'
 type Props = {
   children: ReactNode
 }
-export const ProfileButton = async ({ children }: Props) => {
+export const ProfileButtonSheet = async ({ children }: Props) => {
   const user = await currentUser()
   if (!user) {
     redirect('/sign-in')
