@@ -13,17 +13,18 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
 import { Textarea } from '../ui/textarea'
+import { StatusSelectItem } from './status-select-item'
 
 export const TaskForm = () => {
   const form = useForm<TaskFormType>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
       title: '',
+      status: 'Pendente',
       description: '',
     },
   })
@@ -72,23 +73,15 @@ export const TaskForm = () => {
                     defaultValue={field.value}
                   >
                     <SelectTrigger className="min-w-36 w-fit">
-                      <SelectValue placeholder="Status" />
+                      <SelectValue placeholder={field.value} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         {statusOptions.map(option => (
-                          <SelectItem
-                            key={option.value.toLocaleLowerCase()}
-                            value={option.value.toLocaleLowerCase()}
-                          >
-                            <div className="flex items-center gap-2">
-                              <span
-                                className="block size-2 shrink-0 rounded-full"
-                                style={{ backgroundColor: option.color }}
-                              />
-                              {option.label}
-                            </div>
-                          </SelectItem>
+                          <StatusSelectItem
+                            key={option.label}
+                            option={option}
+                          />
                         ))}
                       </SelectGroup>
                     </SelectContent>

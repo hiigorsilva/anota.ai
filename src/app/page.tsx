@@ -31,9 +31,9 @@ const Home = async () => {
           direction="horizontal"
           className="w-full min-h-full flex-1 border"
         >
-          <ResizablePanel>
+          <ResizablePanel defaultSize={50}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel>
+              <ResizablePanel defaultSize={50}>
                 <div className="h-full flex flex-col justify-center gap-4 p-5">
                   <Card className="bg-transparent border-none">
                     <CardHeader>
@@ -51,7 +51,7 @@ const Home = async () => {
 
               <ResizableHandle withHandle />
 
-              <ResizablePanel>
+              <ResizablePanel defaultSize={50}>
                 <div className="flex h-full items-center justify-center p-6">
                   <span className="font-semibold">Chart Area</span>
                 </div>
