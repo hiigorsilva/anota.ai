@@ -29,7 +29,7 @@ const Home = async () => {
       <ContainerApp className="flex flex-col flex-1">
         <ResizablePanelGroup
           direction="horizontal"
-          className="w-full min-h-full flex-1 border"
+          className="w-full min-h-full flex-1 rounded-md border"
         >
           <ResizablePanel defaultSize={50}>
             <ResizablePanelGroup direction="vertical">
