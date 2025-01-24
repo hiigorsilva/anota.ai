@@ -7,7 +7,14 @@ import { PlusCircleIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
 import { Input } from '../ui/input'
 import {
   Select,
@@ -51,8 +58,9 @@ export const TaskForm = () => {
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem className="w-full space-y-0">
+              <FormItem className="relative w-full space-y-0">
                 <FormLabel className="sr-only">Título</FormLabel>
+                <FormMessage className="absolute -top-5 text-xs" />
                 <FormControl>
                   <Input placeholder="Título" {...field} />
                 </FormControl>
@@ -103,11 +111,16 @@ export const TaskForm = () => {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="w-full space-y-0">
+            <FormItem className="relative w-full space-y-0">
               <FormLabel className="sr-only">Descrição</FormLabel>
               <FormControl>
-                <Textarea placeholder="Descreva sua tarefa" {...field} />
+                <Textarea
+                  {...field}
+                  placeholder="Descreva sua tarefa"
+                  className="resize-none"
+                />
               </FormControl>
+              <FormMessage className="absolute -bottom-5 text-xs" />
             </FormItem>
           )}
         />
