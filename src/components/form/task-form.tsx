@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusCircleIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {
   Form,
@@ -110,19 +111,31 @@ export const TaskForm = () => {
         <FormField
           control={form.control}
           name="description"
-          render={({ field }) => (
-            <FormItem className="relative w-full space-y-0">
-              <FormLabel className="sr-only">Descrição</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="Descreva sua tarefa"
-                  className="resize-none"
-                />
-              </FormControl>
-              <FormMessage className="absolute -bottom-5 text-xs" />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const MAX_DESCRIPTION_LENGTH = 150
+
+            return (
+              <FormItem className="w-full flex flex-col gap-2 space-y-0">
+                <FormLabel className="sr-only">Descrição</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Descreva sua tarefa"
+                    className="resize-none"
+                  />
+                </FormControl>
+                <div className="flex items-center justify-between gap-4">
+                  <FormMessage className="text-xs" />
+                  <Badge
+                    variant="outline"
+                    className={`text-[.625rem] ${(field.value?.length || 0) > MAX_DESCRIPTION_LENGTH ? 'text-destructive' : 'text-muted-foreground'}`}
+                  >
+                    {field.value?.length || 0} / {MAX_DESCRIPTION_LENGTH}
+                  </Badge>
+                </div>
+              </FormItem>
+            )
+          }}
         />
       </form>
     </Form>

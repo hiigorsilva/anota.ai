@@ -12,13 +12,12 @@ const taskStatus = z
 export const taskFormSchema = z.object({
   title: z
     .string({ required_error: 'Campo obrigatório' })
-    .min(3, { message: 'Deve conter no mínimo 3 caracteres' })
-    .max(25, { message: 'Não pode exceder 25 caracteres' }),
+    .min(2, { message: 'Deve conter no mínimo 2 caracteres' })
+    .max(35, { message: 'Não pode exceder 35 caracteres' }),
   status: taskStatus,
   description: z
     .string()
-    .min(5, { message: 'Deve conter no mínimo 5 caracteres' })
-    .max(100, { message: 'Não pode exceder 100 caracteres' })
+    .max(150, { message: 'Você excedeu o limite de 150 caracteres' })
     .optional(),
 })
 
