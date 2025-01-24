@@ -37,7 +37,7 @@ export const TaskForm = () => {
     },
   })
 
-  const onSubmit = (data: TaskFormType) => {
+  const onSubmit = async (data: TaskFormType) => {
     try {
       toast.success('Tarefa adicionada com sucesso')
       console.log(data)
@@ -128,7 +128,7 @@ export const TaskForm = () => {
                   <FormMessage className="text-xs" />
                   <Badge
                     variant="outline"
-                    className={`text-[.625rem] ${(field.value?.length || 0) > MAX_DESCRIPTION_LENGTH ? 'text-destructive' : 'text-muted-foreground'}`}
+                    className={`ml-auto text-[.625rem] ${(field.value?.length || 0) > MAX_DESCRIPTION_LENGTH ? 'text-destructive' : 'text-muted-foreground'}`}
                   >
                     {field.value?.length || 0} / {MAX_DESCRIPTION_LENGTH}
                   </Badge>
