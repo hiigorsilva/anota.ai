@@ -5,6 +5,7 @@ import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, PlusCircleIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Badge } from '../ui/badge'
@@ -28,7 +29,12 @@ import {
 import { Textarea } from '../ui/textarea'
 import { StatusSelectItem } from './status-select-item'
 
-export const TaskForm = () => {
+type Props = {
+  children: ReactNode
+  setOpen: (open: boolean) => void
+}
+
+export const TaskForm = ({ children, setOpen }: Props) => {
   const form = useForm<TaskFormType>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
@@ -48,6 +54,7 @@ export const TaskForm = () => {
       toast.error('Erro ao adicionar tarefa')
       console.error('❌ Erro ao adicionar tarefa: ', err)
     } finally {
+      setOpen(false)
       form.reset()
     }
   }
@@ -56,19 +63,19 @@ export const TaskForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full flex flex-wrap items-center gap-2"
+        className="w-full flex flex-wrap items-center gap-6"
       >
         {/* TITLE */}
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="relative w-full space-y-0">
+            <FormItem className="w-full space-y-1">
               <FormLabel className="sr-only">Título</FormLabel>
-              <FormMessage className="absolute -top-5 text-xs" />
               <FormControl>
-                <Input placeholder="Título" {...field} />
+                <Input placeholder="Título da tarefa" {...field} />
               </FormControl>
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -81,62 +88,60 @@ export const TaskForm = () => {
             const MAX_DESCRIPTION_LENGTH = 150
 
             return (
-              <FormItem className="relative w-full space-y-0">
+              <FormItem className="relative w-full space-y-1">
                 <FormLabel className="sr-only">Descrição</FormLabel>
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder="Descreva sua tarefa"
-                    className="resize-none"
+                    placeholder="Breve descrição da tarefa"
+                    className="h-20 resize-none"
                   />
                 </FormControl>
+                <FormMessage className="text-xs" />
                 <Badge
                   variant="outline"
                   className={`absolute right-1.5 bottom-1.5 text-[.625rem] py-0 px-1.5 ${(field.value?.length || 0) > MAX_DESCRIPTION_LENGTH ? 'text-destructive' : 'text-muted-foreground'}`}
                 >
                   {field.value?.length || 0} / {MAX_DESCRIPTION_LENGTH}
                 </Badge>
-                <div className="flex items-center justify-between gap-4">
-                  <FormMessage className="text-xs" />
-                </div>
               </FormItem>
             )
           }}
         />
 
-        <div className="w-full flex items-center gap-2">
-          {/* STATUS */}
-          <FormField
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-0">
-                <FormLabel className="sr-only">Status</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder={field.value} />
-                    </SelectTrigger>
-                    <SelectContent className="w-full">
-                      <SelectGroup>
-                        {statusOptions.map(option => (
-                          <StatusSelectItem
-                            key={option.label}
-                            option={option}
-                          />
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        {/* STATUS */}
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <FormItem className="w-full space-y-0">
+              <FormLabel className="sr-only">Status</FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={field.value} />
+                  </SelectTrigger>
+                  <SelectContent className="w-full">
+                    <SelectGroup>
+                      {statusOptions.map(option => (
+                        <StatusSelectItem key={option.label} option={option} />
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-          {/* SUBMIT */}
+        <div className="w-full flex items-center gap-2">
+          {/* CANCEL BUTTON */}
+          {children}
+
+          {/* SUBMIT BUTTON */}
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}

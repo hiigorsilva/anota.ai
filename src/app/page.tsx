@@ -1,5 +1,5 @@
 import { ContainerApp } from '@/components/container-app'
-import { TaskForm } from '@/components/form/task-form'
+import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import {
   Card,
@@ -31,19 +31,22 @@ const Home = async () => {
           direction="horizontal"
           className="w-full min-h-full flex-1 rounded-md border"
         >
+          {/* LEFT */}
           <ResizablePanel defaultSize={50}>
             <ResizablePanelGroup direction="vertical">
+              {/* ADD TASKS */}
               <ResizablePanel defaultSize={50}>
-                <div className="h-full flex flex-col justify-center gap-4 p-5">
+                <div className="h-full flex flex-col gap-4 p-5">
                   <Card className="bg-transparent border-none">
-                    <CardHeader>
+                    <CardHeader className="pt-0 px-0">
                       <CardTitle>Crie uma nova tarefa</CardTitle>
                       <CardDescription>
-                        Descreva o que é sua tarefa
+                        Clique no botão abaixo para criar uma nova tarefa
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <TaskForm />
+                    <CardContent className="px-0">
+                      {/* MODAL */}
+                      <AddTaskFormModal />
                     </CardContent>
                   </Card>
                 </div>
@@ -51,6 +54,7 @@ const Home = async () => {
 
               <ResizableHandle withHandle />
 
+              {/* CHART */}
               <ResizablePanel defaultSize={50}>
                 <div className="flex h-full items-center justify-center p-6">
                   <span className="font-semibold">Chart Area</span>
@@ -61,9 +65,20 @@ const Home = async () => {
 
           <ResizableHandle withHandle />
 
+          {/* RIGHT */}
           <ResizablePanel defaultSize={50}>
-            <div className="flex h-[200px] items-center justify-center p-6">
-              <span className="font-semibold">Task List Area</span>
+            <div className="h-full flex flex-col gap-4 p-5">
+              <Card className="bg-transparent border-none">
+                <CardHeader className="pt-0 px-0">
+                  <CardTitle>Últimas tarefas criadas</CardTitle>
+                  <CardDescription>
+                    Conclua todas e garanta a produtividade do dia.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="px-0">
+                  {/* <ListTask /> */}s
+                </CardContent>
+              </Card>
             </div>
           </ResizablePanel>
         </ResizablePanelGroup>
