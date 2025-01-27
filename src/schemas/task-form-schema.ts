@@ -18,7 +18,7 @@ export const taskFormSchema = z.object({
   description: z
     .string()
     .max(150, { message: 'Você excedeu o limite de 150 caracteres' })
-    .nullable(),
+    .optional(),
 })
 
 export type TaskStatusType = z.infer<typeof taskStatus>
