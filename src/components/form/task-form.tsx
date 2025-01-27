@@ -1,5 +1,6 @@
 'use client'
 
+import { createTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -37,13 +38,16 @@ export const TaskForm = () => {
     },
   })
 
-  const onSubmit = async (data: TaskFormType) => {
+  const onSubmit = async (task: TaskFormType) => {
     try {
+      await createTaskAction(task)
+      // console.log(task)
       toast.success('Tarefa adicionada com sucesso')
-      console.log(data)
     } catch (err) {
-      toast.error('Ocorreu um erro ao adicionar sua tarefa')
-      console.error(err)
+      toast.error('Erro ao adicionar tarefa')
+      console.error('❌ Erro ao adicionar tarefa: ', err)
+    } finally {
+      form.reset()
     }
   }
 
