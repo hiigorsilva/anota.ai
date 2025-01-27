@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Toaster } from '@/components/ui/sonner'
 import { RootProviders } from '@/providers'
 import { ClerkProvider } from '@clerk/nextjs'
 
@@ -35,7 +34,6 @@ export default function RootLayout({
           <RootProviders>
             <div className="flex-1 h-full w-full">{children}</div>
           </RootProviders>
-          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

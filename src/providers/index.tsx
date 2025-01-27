@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
 import type { ReactNode } from 'react'
 
 type Props = {
@@ -13,7 +14,10 @@ export const RootProviders = ({ children }: Props) => {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <>
+        {children}
+        <Toaster richColors />
+      </>
     </ThemeProvider>
   )
 }
