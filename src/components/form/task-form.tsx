@@ -4,7 +4,7 @@ import { createTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusCircleIcon } from 'lucide-react'
+import { Loader2, PlusCircleIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Badge } from '../ui/badge'
@@ -40,6 +40,7 @@ export const TaskForm = () => {
 
   const onSubmit = async (task: TaskFormType) => {
     try {
+      await new Promise(resolve => setTimeout(resolve, 3000))
       await createTaskAction(task)
       // console.log(task)
       toast.success('Tarefa adicionada com sucesso')
@@ -57,38 +58,69 @@ export const TaskForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full flex flex-wrap items-center gap-2"
       >
-        <div className="w-full flex items-center gap-2">
-          {/* TITLE */}
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem className="relative w-full space-y-0">
-                <FormLabel className="sr-only">Título</FormLabel>
-                <FormMessage className="absolute -top-5 text-xs" />
-                <FormControl>
-                  <Input placeholder="Título" {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        {/* TITLE */}
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem className="relative w-full space-y-0">
+              <FormLabel className="sr-only">Título</FormLabel>
+              <FormMessage className="absolute -top-5 text-xs" />
+              <FormControl>
+                <Input placeholder="Título" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
+        {/* DESCRIPTION */}
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => {
+            const MAX_DESCRIPTION_LENGTH = 150
+
+            return (
+              <FormItem className="relative w-full space-y-0">
+                <FormLabel className="sr-only">Descrição</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Descreva sua tarefa"
+                    className="resize-none"
+                  />
+                </FormControl>
+                <Badge
+                  variant="outline"
+                  className={`absolute right-1.5 bottom-1.5 text-[.625rem] py-0 px-1.5 ${(field.value?.length || 0) > MAX_DESCRIPTION_LENGTH ? 'text-destructive' : 'text-muted-foreground'}`}
+                >
+                  {field.value?.length || 0} / {MAX_DESCRIPTION_LENGTH}
+                </Badge>
+                <div className="flex items-center justify-between gap-4">
+                  <FormMessage className="text-xs" />
+                </div>
+              </FormItem>
+            )
+          }}
+        />
+
+        <div className="w-full flex items-center gap-2">
           {/* STATUS */}
           <FormField
             control={form.control}
             name="status"
             render={({ field }) => (
-              <FormItem className="space-y-0">
+              <FormItem className="w-full space-y-0">
                 <FormLabel className="sr-only">Status</FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <SelectTrigger className="min-w-36 w-fit">
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder={field.value} />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="w-full">
                       <SelectGroup>
                         {statusOptions.map(option => (
                           <StatusSelectItem
@@ -105,42 +137,24 @@ export const TaskForm = () => {
           />
 
           {/* SUBMIT */}
-          <Button type="submit">
-            <PlusCircleIcon className="size-4 shrink-0" />
-            Adicionar
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="w-full"
+          >
+            {form.formState.isSubmitting ? (
+              <>
+                <Loader2 className="size-4 shrink-0 animate-spin" />
+                <span>Criando...</span>
+              </>
+            ) : (
+              <>
+                <PlusCircleIcon className="size-4 shrink-0" />
+                <span>Criar tarefa</span>
+              </>
+            )}
           </Button>
         </div>
-
-        {/* DESCRIPTION */}
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => {
-            const MAX_DESCRIPTION_LENGTH = 150
-
-            return (
-              <FormItem className="w-full flex flex-col gap-2 space-y-0">
-                <FormLabel className="sr-only">Descrição</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder="Descreva sua tarefa"
-                    className="resize-none"
-                  />
-                </FormControl>
-                <div className="flex items-center justify-between gap-4">
-                  <FormMessage className="text-xs" />
-                  <Badge
-                    variant="outline"
-                    className={`ml-auto text-[.625rem] ${(field.value?.length || 0) > MAX_DESCRIPTION_LENGTH ? 'text-destructive' : 'text-muted-foreground'}`}
-                  >
-                    {field.value?.length || 0} / {MAX_DESCRIPTION_LENGTH}
-                  </Badge>
-                </div>
-              </FormItem>
-            )
-          }}
-        />
       </form>
     </Form>
   )
