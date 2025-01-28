@@ -7,13 +7,17 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export const createTaskAction = async (task: TaskFormType) => {
-  const user = await currentUser()
-  if (!user) {
-    redirect('/sign-in')
+  try {
+    const user = await currentUser()
+    if (!user) {
+      redirect('/sign-in')
+    }
+
+    await createTaskService(task)
+
+    revalidatePath('/')
+    revalidatePath('/tasks')
+  } catch (err) {
+    console.error('❌ Erro ao adicionar tarefa: ', err)
   }
-
-  await createTaskService(task)
-
-  revalidatePath('/')
-  revalidatePath('/tasks')
 }

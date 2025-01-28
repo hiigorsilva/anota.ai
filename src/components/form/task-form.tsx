@@ -1,6 +1,6 @@
 'use client'
 
-import { createTaskAction } from '@/actions/task'
+import { createTaskAction } from '@/actions/task/create-task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -46,7 +46,6 @@ export const TaskForm = ({ children, setOpen }: Props) => {
 
   const onSubmit = async (task: TaskFormType) => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 3000))
       await createTaskAction(task)
       // console.log(task)
       toast.success('Tarefa adicionada com sucesso')

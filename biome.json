@@ -28,6 +28,9 @@
         "noUnusedVariables": "error",
         "noUnusedImports": "error"
       },
+      "complexity": {
+        "useOptionalChain": "off"
+      },
       "suspicious": {
         "noExplicitAny": "off",
         "noEmptyInterface": "off"

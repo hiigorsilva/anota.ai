@@ -15,6 +15,7 @@ import { TaskForm } from './task-form'
 
 export const AddTaskFormModal = () => {
   const [open, setOpen] = useState(false)
+
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>

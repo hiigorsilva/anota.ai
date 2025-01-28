@@ -1,6 +1,7 @@
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
+import { TaskList } from '@/components/task/task-list'
 import {
   Card,
   CardContent,
@@ -76,7 +77,7 @@ const Home = async () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="px-0">
-                  {/* <ListTask /> */}s
+                  <TaskList />
                 </CardContent>
               </Card>
             </div>
