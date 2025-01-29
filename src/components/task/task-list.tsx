@@ -27,11 +27,26 @@ export const TaskList = async () => {
       <TableBody>
         {tasks &&
           tasks.map(task => (
-            <TableRow key={task.id}>
+            <TableRow
+              key={task.id}
+              className={
+                task.status === 'Cancelado' || task.status === 'Concluído'
+                  ? 'text-muted-foreground'
+                  : ''
+              }
+            >
               <TableCell className="capitalize">
                 {formatDate(task.createdAt)}
               </TableCell>
-              <TableCell>{task.title}</TableCell>
+              <TableCell
+                className={
+                  task.status === 'Cancelado' || task.status === 'Concluído'
+                    ? 'line-through'
+                    : ''
+                }
+              >
+                {task.title}
+              </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
                   <div
