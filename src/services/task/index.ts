@@ -1,24 +1,16 @@
 import { db } from '@/lib/prisma'
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import { currentUser } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
 
-export const createTaskService = async (data: TaskFormType) => {
-  const user = await currentUser()
-  if (!user) {
-    console.error('❌ Usuário nao autenticado')
-    redirect('/sign-in')
-  }
-
+export const createTaskService = async (userId: string, data: TaskFormType) => {
   await db.user.upsert({
-    where: { id: user.id },
-    create: { id: user.id },
+    where: { id: userId },
+    create: { id: userId },
     update: {},
   })
 
   const task = await db.task.create({
     data: {
-      userId: user.id,
+      userId: userId,
       title: data.title,
       status: data.status,
       description: data.description || '',

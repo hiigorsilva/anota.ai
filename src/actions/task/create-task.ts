@@ -13,7 +13,7 @@ export const createTaskAction = async (task: TaskFormType) => {
       redirect('/sign-in')
     }
 
-    await createTaskService(task)
+    await createTaskService(user.id, task)
 
     revalidatePath('/')
     revalidatePath('/tasks')
