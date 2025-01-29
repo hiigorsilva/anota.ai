@@ -2,10 +2,12 @@ import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import { TaskList } from '@/components/task/task-list'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -15,6 +17,7 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { currentUser } from '@clerk/nextjs/server'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 const Home = async () => {
@@ -79,6 +82,11 @@ const Home = async () => {
                 <CardContent className="px-0">
                   <TaskList />
                 </CardContent>
+                <CardFooter className="text-sm justify-center">
+                  <Button variant="link" size="sm" asChild>
+                    <Link href="/tasks">Ver todas</Link>
+                  </Button>
+                </CardFooter>
               </Card>
             </div>
           </ResizablePanel>

@@ -17,7 +17,7 @@ export const TaskList = async () => {
 
   return (
     <Table>
-      <TableCaption>Lista de suas tarefas recentes.</TableCaption>
+      {!tasks && <TableCaption>Nenhuma tarefa cadastrada.</TableCaption>}
       <TableHeader>
         <TableRow>
           <TableHead>Data</TableHead>
