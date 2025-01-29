@@ -1,10 +1,10 @@
 import { getTaskAction } from '@/actions/task/get-task'
 import { getStatusColor } from '@/data/task/status-options'
 import { formatDate } from '@/utils/date-format'
-import { PencilIcon } from 'lucide-react'
 import { Button } from '../ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -21,6 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table'
+import { DeleteTaskButton } from './delete-task-button'
+import { EditTaskDialog } from './edit-task-dialog'
 
 export const TaskList = async () => {
   const tasks = await getTaskAction()
@@ -99,9 +101,14 @@ export const TaskList = async () => {
               </TableCell>
 
               <TableCell>
-                <Button size="icon" variant="ghost">
-                  <PencilIcon className="size-4 shrink-0" />
-                </Button>
+                <EditTaskDialog task={task}>
+                  <DialogClose asChild>
+                    <Button variant="secondary" className="w-full">
+                      Cancelar
+                    </Button>
+                  </DialogClose>
+                </EditTaskDialog>
+                <DeleteTaskButton task={task} />
               </TableCell>
             </TableRow>
           ))}

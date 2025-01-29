@@ -27,3 +27,25 @@ export const getTaskService = async (userId: string) => {
   })
   return tasks
 }
+
+export const removeTaskService = async (userId: string, taskId: string) => {
+  const task = await db.task.delete({
+    where: { userId: userId, id: taskId },
+  })
+  return task
+}
+
+// TODO: resolver bug de edição da task
+// export const editTaskService = async (userId: string, data: TaskType) => {
+//   const task = await db.task.update({
+//     where: { userId: userId, id: data.id },
+//     data: {
+//       ...data,
+//       title: data.title,
+//       status: data.status,
+//       description: data.description || '',
+//     },
+//   })
+
+//   return task
+// }
