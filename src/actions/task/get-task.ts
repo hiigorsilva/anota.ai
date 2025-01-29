@@ -1,3 +1,5 @@
+'use server'
+
 import { getTaskService } from '@/services/task'
 import { currentUser } from '@clerk/nextjs/server'
 
