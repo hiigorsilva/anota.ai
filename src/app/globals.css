@@ -68,4 +68,29 @@
   body {
     @apply bg-background text-foreground;
   }
+  *::-webkit-scrollbar {
+  @apply w-2
+  }
+  *::-webkit-scrollbar-track {
+  @apply bg-card
+  }
+  *::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/35 rounded-full 
+  }
 }
+
+{/*
+body::-webkit-scrollbar {
+  width: 12px;               
+}
+
+body::-webkit-scrollbar-track {
+  background: orange;        
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: blue;    
+  border-radius: 20px;       
+  border: 3px solid orange;  
+
+*/}
