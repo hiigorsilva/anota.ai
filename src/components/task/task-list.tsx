@@ -13,7 +13,6 @@ import {
 
 export const TaskList = async () => {
   const tasks = await getTaskAction()
-  console.log(tasks)
 
   return (
     <Table>
@@ -29,7 +28,9 @@ export const TaskList = async () => {
         {tasks &&
           tasks.map(task => (
             <TableRow key={task.id}>
-              <TableCell>{formatDate(task.createdAt)}</TableCell>
+              <TableCell className="capitalize">
+                {formatDate(task.createdAt)}
+              </TableCell>
               <TableCell>{task.title}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
