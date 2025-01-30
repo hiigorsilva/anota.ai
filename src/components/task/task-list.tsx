@@ -57,6 +57,7 @@ export const TaskList = async () => {
               </TableCell>
               <TableCell className="min-h-64 text-nowrap">
                 <Dialog>
+                  {/* TODO: Resolver BUG ao clicar no título / abrir modal de edição */}
                   <DialogTrigger
                     className={`hover:underline ${
                       task.status === 'Cancelado' || task.status === 'Concluído'
