@@ -1,6 +1,7 @@
 import { getTaskAction } from '@/actions/task/get-task'
 import { getStatusColor } from '@/data/task/status-options'
 import { formatDate } from '@/utils/date-format'
+import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -57,11 +58,11 @@ export const TaskList = async () => {
               <TableCell className="min-h-64 text-nowrap">
                 <Dialog>
                   <DialogTrigger
-                    className={
+                    className={`hover:underline ${
                       task.status === 'Cancelado' || task.status === 'Concluído'
                         ? 'line-through'
                         : ''
-                    }
+                    }`}
                   >
                     {task.title}
                   </DialogTrigger>
@@ -69,8 +70,13 @@ export const TaskList = async () => {
                     <DialogHeader className="space-y-3">
                       <DialogTitle>{task.title}</DialogTitle>
                       <DialogDescription className="flex justify-between items-center gap-6">
-                        <span>Atualizado em {formatDate(task.updatedAt)}</span>
-                        <span className="flex items-center gap-2">
+                        <span className="text-sm">
+                          Atualizado em {formatDate(task.updatedAt)}
+                        </span>
+                        <Badge
+                          variant="secondary"
+                          className="flex items-center gap-2 font-normal"
+                        >
                           <div
                             className="size-2.5 rounded-full"
                             style={{
@@ -78,12 +84,12 @@ export const TaskList = async () => {
                             }}
                           />
                           {task.status}
-                        </span>
+                        </Badge>
                       </DialogDescription>
                     </DialogHeader>
                     <Separator />
                     <div>
-                      <p className="text-muted-foreground">
+                      <p className="text-sm text-muted-foreground">
                         {task.description}
                       </p>
                     </div>
