@@ -10,6 +10,7 @@ const taskStatus = z
   .default('Pendente')
 
 export const taskFormSchema = z.object({
+  id: z.string().uuid().optional(),
   title: z
     .string({ required_error: 'Campo obrigatório' })
     .min(2, { message: 'Deve conter no mínimo 2 caracteres' })

@@ -35,17 +35,18 @@ export const removeTaskService = async (userId: string, taskId: string) => {
   return task
 }
 
-// TODO: resolver bug de edição da task
-// export const editTaskService = async (userId: string, data: TaskType) => {
-//   const task = await db.task.update({
-//     where: { userId: userId, id: data.id },
-//     data: {
-//       ...data,
-//       title: data.title,
-//       status: data.status,
-//       description: data.description || '',
-//     },
-//   })
-
-//   return task
-// }
+export const updateTaskService = async (
+  userId: string,
+  currentTask: TaskFormType,
+  newTask: TaskFormType
+) => {
+  const task = await db.task.update({
+    where: { userId: userId, id: currentTask.id },
+    data: {
+      title: newTask.title,
+      status: newTask.status,
+      description: newTask.description || '',
+    },
+  })
+  return task
+}

@@ -47,7 +47,6 @@ export const TaskForm = ({ children, setOpen }: Props) => {
   const onSubmit = async (task: TaskFormType) => {
     try {
       await createTaskAction(task)
-      // console.log(task)
       toast.success('Tarefa adicionada com sucesso')
     } catch (err) {
       toast.error('Erro ao adicionar tarefa')

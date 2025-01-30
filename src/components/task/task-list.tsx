@@ -107,7 +107,7 @@ export const TaskList = async () => {
               </TableCell>
 
               <TableCell>
-                <EditTaskDialog task={task}>
+                <EditTaskDialog currentTask={task}>
                   <DialogClose asChild>
                     <Button variant="secondary" className="w-full">
                       Cancelar
