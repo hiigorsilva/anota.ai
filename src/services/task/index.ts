@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma'
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import { getMonthPeriod } from '@/utils/date-format'
+import { getCurrentMonth } from '@/utils/current-month'
 
 export const createTaskService = async (userId: string, data: TaskFormType) => {
   await db.user.upsert({
@@ -57,51 +57,57 @@ export const updateTaskService = async (
 
 export const getTaskCountByStatusService = async (userId: string) => {
   const date = new Date(Date.now()) // Provisório, enquanto nao tem sistema de calendário/agendamento
-  const { startOfMonth, endOfMonth } = getMonthPeriod(date)
+  const { startOfMonth, endOfMonth } = getCurrentMonth(date)
 
-  const pendding = await db.task.count({
-    where: {
-      userId: userId,
-      status: 'Pendente',
-      createdAt: {
-        gte: startOfMonth,
-        lte: endOfMonth,
+  const [pendding, doing, completed, canceled] = await Promise.all([
+    // Pendding
+    db.task.count({
+      where: {
+        userId: userId,
+        status: 'Pendente',
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
       },
-    },
-  })
+    }),
 
-  const doing = await db.task.count({
-    where: {
-      userId: userId,
-      status: 'Fazendo',
-      createdAt: {
-        gte: startOfMonth,
-        lte: endOfMonth,
+    // Doing
+    db.task.count({
+      where: {
+        userId: userId,
+        status: 'Fazendo',
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
       },
-    },
-  })
+    }),
 
-  const completed = await db.task.count({
-    where: {
-      userId: userId,
-      status: 'Concluído',
-      createdAt: {
-        gte: startOfMonth,
-        lte: endOfMonth,
+    // Completed
+    db.task.count({
+      where: {
+        userId: userId,
+        status: 'Concluído',
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
       },
-    },
-  })
+    }),
 
-  const canceled = await db.task.count({
-    where: {
-      userId: userId,
-      status: 'Cancelado',
-      createdAt: {
-        gte: startOfMonth,
-        lte: endOfMonth,
+    // Canceled
+    db.task.count({
+      where: {
+        userId: userId,
+        status: 'Cancelado',
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
       },
-    },
-  })
+    }),
+  ])
 
   return { pendding, doing, completed, canceled }
 }
