@@ -17,7 +17,7 @@ export const getTaskCountByStatusAction = async () => {
     revalidatePath('/')
     revalidatePath('/tasks')
 
-    return task
+    return task ?? 0
   } catch (err) {
     console.error('❌ Erro ao listar quantidade de tarefas por status: ', err)
   }
