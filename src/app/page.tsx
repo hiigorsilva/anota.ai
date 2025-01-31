@@ -1,3 +1,4 @@
+import { getTaskCountByStatusAction } from '@/actions/task/get-task-count-by-status'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
@@ -25,6 +26,9 @@ const Home = async () => {
   if (!user?.id) {
     redirect('/sign-in')
   }
+
+  const countTasks = await getTaskCountByStatusAction()
+  console.log('COUNT TASKS: ', countTasks)
 
   return (
     <div className="flex flex-col min-h-dvh h-full w-full">
@@ -61,7 +65,7 @@ const Home = async () => {
               {/* CHART */}
               <ResizablePanel defaultSize={50}>
                 <div className="flex h-full items-center justify-center p-6">
-                  <span className="font-semibold">Chart Area</span>
+                  {/* <TaskChart /> */}
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>
