@@ -38,34 +38,26 @@ const Home = async () => {
         >
           {/* LEFT */}
           <ResizablePanel defaultSize={50}>
-            <ResizablePanelGroup direction="vertical">
+            <div className="h-full flex flex-col gap-0 p-5">
               {/* ADD TASKS */}
-              <ResizablePanel defaultSize={25}>
-                <div className="h-full flex flex-col gap-4 p-5">
-                  <Card className="bg-transparent border-none">
-                    <CardHeader className="pt-0 px-0">
-                      <CardTitle>Crie uma nova tarefa</CardTitle>
-                      <CardDescription>
-                        Clique no botão abaixo para criar uma nova tarefa
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="px-0">
-                      {/* MODAL */}
-                      <AddTaskFormModal />
-                    </CardContent>
-                  </Card>
-                </div>
-              </ResizablePanel>
-
-              <ResizableHandle withHandle />
+              <Card className="bg-transparent border-none">
+                <CardHeader className="pt-0 px-0">
+                  <CardTitle>Crie uma nova tarefa</CardTitle>
+                  <CardDescription>
+                    Clique no botão abaixo para criar uma nova tarefa
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="px-0">
+                  {/* MODAL */}
+                  <AddTaskFormModal />
+                </CardContent>
+              </Card>
 
               {/* CHART */}
-              <ResizablePanel defaultSize={75}>
-                <div className="flex h-full items-center justify-center p-6">
-                  <TaskChartArea />
-                </div>
-              </ResizablePanel>
-            </ResizablePanelGroup>
+              <div className="flex h-full items-center justify-center">
+                <TaskChartArea />
+              </div>
+            </div>
           </ResizablePanel>
 
           <ResizableHandle withHandle />
