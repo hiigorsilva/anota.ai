@@ -2,6 +2,7 @@ import { TaskChartArea } from '@/components/chart/task-chart-area'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
+import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
 import { TaskList } from '@/components/task/task-list'
 import { Button } from '@/components/ui/button'
 import {
@@ -67,7 +68,10 @@ const Home = async () => {
             <div className="h-full flex flex-col gap-4 p-5">
               <Card className="bg-transparent border-none">
                 <CardHeader className="pt-0 px-0">
-                  <CardTitle>Últimas tarefas criadas</CardTitle>
+                  <div className="flex items-center justify-between gap-6">
+                    <CardTitle>Últimas tarefas criadas</CardTitle>
+                    <DeleteAllTaskButton />
+                  </div>
                   <CardDescription>
                     Conclua todas e garanta a produtividade do dia.
                   </CardDescription>

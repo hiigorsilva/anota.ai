@@ -17,6 +17,7 @@ export const createTaskService = async (userId: string, data: TaskFormType) => {
       description: data.description || '',
     },
   })
+
   return task
 }
 
@@ -34,6 +35,13 @@ export const removeTaskService = async (userId: string, taskId: string) => {
     where: { userId: userId, id: taskId },
   })
   return task
+}
+
+export const removeAllTaskService = async (userId: string) => {
+  const tasks = await db.task.deleteMany({
+    where: { userId: userId },
+  })
+  return tasks
 }
 
 export const updateTaskService = async (
