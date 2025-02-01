@@ -45,7 +45,7 @@ export const TeamSwitcher = async () => {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80" align="start">
         <Command>
           <CommandInput placeholder="Buscar equipe..." />
 
