@@ -53,7 +53,9 @@ export const DeleteTaskButton = ({ task }: Props) => {
           <DialogClose asChild>
             <Button variant="secondary">Cancelar</Button>
           </DialogClose>
-          <Button onClick={handleRemoveTask}>Remover</Button>
+          <Button onClick={handleRemoveTask} variant="destructive">
+            Remover
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

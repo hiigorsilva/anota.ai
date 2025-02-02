@@ -38,16 +38,16 @@ export const DeleteAllTaskButton = () => {
           size="sm"
           className="text-sm text-rose-600 dark:text-rose-500"
         >
-          Excluir tudo
-          <Trash2Icon className="text-rose-600 dark:text-rose-500 size-4 shrink-0" />
+          Limpar
+          <Trash2Icon className="text-rose-600 dark:text-rose-500 size-3 shrink-0" />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Tem certeza que deseja excluir tudo?</DialogTitle>
-          <DialogDescription>
-            Essa ação não pode ser mais desfeita
-          </DialogDescription>
+          <DialogTitle>
+            Tem certeza que deseja limpar sua lista de tarefas?
+          </DialogTitle>
+          <DialogDescription>Essa ação não pode ser desfeita</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
@@ -55,7 +55,7 @@ export const DeleteAllTaskButton = () => {
           </DialogClose>
 
           <Button onClick={handleDeleteAllTask} variant="destructive">
-            Excluir tudo
+            Limpar tudo
           </Button>
         </DialogFooter>
       </DialogContent>
