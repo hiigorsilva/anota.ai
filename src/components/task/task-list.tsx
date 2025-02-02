@@ -1,6 +1,7 @@
 import { getTaskAction } from '@/actions/task/get-task'
 import { getStatusColor } from '@/data/task/status-options'
 import { formatDate } from '@/utils/date-format'
+import { NotebookPenIcon } from 'lucide-react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {
@@ -30,7 +31,15 @@ export const TaskList = async () => {
 
   return (
     <Table>
-      {!tasks && <TableCaption>Nenhuma tarefa cadastrada.</TableCaption>}
+      {!tasks && (
+        <TableCaption className="py-8">
+          <NotebookPenIcon
+            strokeWidth={1.5}
+            className="text-muted-foreground mb-2 size-6"
+          />
+          Nenhuma tarefa cadastrada.
+        </TableCaption>
+      )}
       <TableHeader>
         <TableRow>
           <TableHead className="w-36 text-nowrap">Data</TableHead>
