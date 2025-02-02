@@ -66,7 +66,7 @@ const Home = async () => {
           {/* RIGHT */}
           <ResizablePanel defaultSize={50}>
             <div className="h-full flex flex-col gap-4 p-5">
-              <Card className="bg-transparent border-none">
+              <Card className="h-full flex flex-col bg-transparent border-none">
                 <CardHeader className="pt-0 px-0">
                   <div className="flex items-center justify-between gap-6">
                     <CardTitle>Últimas tarefas criadas</CardTitle>
@@ -76,10 +76,10 @@ const Home = async () => {
                     Conclua todas e garanta a produtividade do dia.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="px-0">
+                <CardContent className="flex-1 px-0">
                   <TaskList />
                 </CardContent>
-                <CardFooter className="text-sm justify-center">
+                <CardFooter className="text-sm justify-center p-0">
                   <Button variant="link" size="sm" asChild>
                     <Link href="/tasks">Ver todas</Link>
                   </Button>
