@@ -1,5 +1,4 @@
 import { currentUser } from '@clerk/nextjs/server'
-import { LogOutIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { ToggleTheme } from '../toggle-theme'
@@ -15,6 +14,7 @@ import {
 } from '../ui/sheet'
 import { LinkRow } from './link-row'
 import { navLinks } from './links'
+import { SignOutButton } from './sign-out-button'
 
 type Props = {
   children: ReactNode
@@ -53,14 +53,10 @@ export const ProfileButtonSheet = async ({ children }: Props) => {
           <Separator />
 
           <div className="flex justify-between items-center gap-4 flex-wrap">
-            <Button
-              variant="ghost"
-              className="justify-start text-rose-500 dark:text-rose-400"
-            >
-              <LogOutIcon className="text-rose-500 dark:text-rose-400 size-4 shrink-0" />
-              Sair
-            </Button>
+            {/* SIGN OUT BUTTON */}
+            <SignOutButton />
 
+            {/* THEME BUTTON */}
             <ToggleTheme />
           </div>
         </div>
