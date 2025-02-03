@@ -119,3 +119,28 @@ export const getTaskCountByStatusService = async (userId: string) => {
 
   return { pendding, doing, completed, canceled }
 }
+
+export const searchTaskService = async (userId: string, search: string) => {
+  const tasks = await db.task.findMany({
+    where: {
+      userId: userId,
+
+      OR: [
+        {
+          title: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          description: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ],
+    },
+  })
+
+  return tasks
+}
