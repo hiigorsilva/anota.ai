@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { type SearchType, searchSchema } from '@/schemas/search-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SearchIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { Button } from './ui/button'
 import {
@@ -29,8 +30,10 @@ export const Search = ({ className }: Props) => {
     },
   })
 
-  const onSubmit = (values: SearchType) => {
-    console.log(values)
+  const router = useRouter()
+
+  const onSubmit = (data: SearchType) => {
+    router.push(`/tasks/${data.search}`)
   }
 
   return (
@@ -72,7 +75,9 @@ export const Search = ({ className }: Props) => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Buscar</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              Buscar
+            </Button>
           </form>
         </Form>
       </DialogContent>
