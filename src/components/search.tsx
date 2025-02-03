@@ -5,6 +5,7 @@ import { type SearchType, searchSchema } from '@/schemas/search-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SearchIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from './ui/button'
 import {
@@ -32,16 +33,36 @@ export const Search = ({ className }: Props) => {
 
   const router = useRouter()
 
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === '/' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen(open => !open)
+      }
+    }
+
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [])
+
   const onSubmit = (data: SearchType) => {
     router.push(`/tasks/${data.search}`)
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className={cn('w-full', className)}>
-        <Button variant="outline" className="text-muted-foreground">
+        <Button
+          variant="outline"
+          className="justify-between gap-3 text-muted-foreground"
+        >
           <SearchIcon className="text-muted-foreground size-4 shrink-0" />
-          Buscar...
+          <span>Buscar tarefas</span>
+          <span className="flex justify-center items-center gap-2 font-semibold uppercase w-fit px-2 h-full rounded-sm bg-muted-foreground/10">
+            ⌘ /
+          </span>
         </Button>
       </DialogTrigger>
       <DialogContent>
