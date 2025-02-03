@@ -48,7 +48,7 @@ export const Search = ({ className }: Props) => {
         <DialogHeader>
           <DialogTitle>Buscar tarefas</DialogTitle>
           <DialogDescription>
-            Encontre a tarefa que você está procurando.
+            Pesquise pelo título ou descrição da tarefa que deseja.
           </DialogDescription>
         </DialogHeader>
 
