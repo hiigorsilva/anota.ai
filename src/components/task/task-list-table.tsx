@@ -1,5 +1,5 @@
 import { getStatusColor } from '@/data/task/status-options'
-import { formatDate } from '@/utils/date-format'
+import { formatTime } from '@/utils/format-time'
 import type { Task } from '@prisma/client'
 import { NotebookPenIcon } from 'lucide-react'
 import { Button } from '../ui/button'
@@ -64,8 +64,8 @@ export const TaskListTable = async ({ tasks }: Props) => {
                   : ''
               }`}
             >
-              <TableCell className="capitalize">
-                {formatDate(task.createdAt)}
+              <TableCell className="lowercase">
+                {formatTime(task.createdAt)}
               </TableCell>
               <TableCell className="min-h-64 text-nowrap">
                 <Dialog>
@@ -84,7 +84,7 @@ export const TaskListTable = async ({ tasks }: Props) => {
                       <DialogTitle>{task.title}</DialogTitle>
                       <DialogDescription className="flex justify-between items-center gap-6">
                         <span className="text-sm">
-                          Atualizado em {formatDate(task.updatedAt)}
+                          Atualizado {formatTime(task.updatedAt)}
                         </span>
                         <div className="flex items-center gap-2">
                           <div
@@ -116,7 +116,9 @@ export const TaskListTable = async ({ tasks }: Props) => {
                 </div>
               </TableCell>
 
-              <TableCell>{formatDate(task.updatedAt)}</TableCell>
+              <TableCell className="lowercase">
+                {formatTime(task.updatedAt)}
+              </TableCell>
 
               <TableCell>
                 <EditTaskDialog currentTask={task}>

@@ -1,6 +1,6 @@
 import { getTaskAction } from '@/actions/task/get-task'
 import { getStatusColor } from '@/data/task/status-options'
-import { formatDate } from '@/utils/date-format'
+import { formatTime } from '@/utils/format-time'
 import { NotebookPenIcon } from 'lucide-react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -61,8 +61,8 @@ export const TaskList = async () => {
                   : ''
               }`}
             >
-              <TableCell className="capitalize">
-                {formatDate(task.createdAt)}
+              <TableCell className="lowercase">
+                {formatTime(task.createdAt)}
               </TableCell>
               <TableCell className="min-h-64 text-nowrap">
                 <Dialog>
@@ -81,7 +81,7 @@ export const TaskList = async () => {
                       <DialogTitle>{task.title}</DialogTitle>
                       <DialogDescription className="flex justify-between items-center gap-6">
                         <span className="text-sm">
-                          Atualizado em {formatDate(task.updatedAt)}
+                          Atualizado {formatTime(task.updatedAt)}
                         </span>
                         <Badge
                           variant="secondary"
