@@ -1,7 +1,7 @@
 'use client'
 
 import { removeTaskAction } from '@/actions/task/remove-task'
-import type { TaskType } from '@/schemas/list-task'
+import type { Task } from '@prisma/client'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -18,7 +18,7 @@ import {
 } from '../ui/dialog'
 
 type Props = {
-  task: TaskType
+  task: Task
 }
 
 export const DeleteTaskButton = ({ task }: Props) => {
