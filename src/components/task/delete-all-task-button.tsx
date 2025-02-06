@@ -1,6 +1,6 @@
 'use client'
 
-import { removeAllTaskAction } from '@/actions/task/remove-all-task'
+import { removeAllTaskAction } from '@/actions/task'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'

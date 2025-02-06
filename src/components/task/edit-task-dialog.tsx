@@ -1,6 +1,6 @@
 'use client'
 
-import { updateTaskAction } from '@/actions/task/update-task'
+import { updateTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'

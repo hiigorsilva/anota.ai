@@ -1,6 +1,6 @@
 'use client'
 
-import { removeTaskAction } from '@/actions/task/remove-task'
+import { removeTaskAction } from '@/actions/task'
 import type { Task } from '@prisma/client'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
