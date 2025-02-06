@@ -1,11 +1,14 @@
-import { getTaskAction } from '@/actions/task/get-task'
+import { getTaskAction } from '@/actions/task'
 import { ContainerApp } from '@/components/container-app'
+import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
 import { TaskListTable } from '@/components/task/task-list-table'
+import { PlusIcon } from 'lucide-react'
 
 const TasksPage = async () => {
   const tasks = await getTaskAction()
+
   if (!tasks) {
     return null
   }
@@ -21,7 +24,14 @@ const TasksPage = async () => {
             Minhas tarefas
           </h1>
 
-          <DeleteAllTaskButton />
+          <div className="flex items-center gap-2">
+            {/* MODAL */}
+            <AddTaskFormModal>
+              <PlusIcon className="size-4 shrink-0" />
+              Adicionar
+            </AddTaskFormModal>
+            <DeleteAllTaskButton />
+          </div>
         </div>
 
         {/* TASKS TABLE */}

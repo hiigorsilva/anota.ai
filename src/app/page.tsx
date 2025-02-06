@@ -19,6 +19,7 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { currentUser } from '@clerk/nextjs/server'
+import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
@@ -50,12 +51,15 @@ const Home = async () => {
                 </CardHeader>
                 <CardContent className="px-0">
                   {/* MODAL */}
-                  <AddTaskFormModal />
+                  <AddTaskFormModal>
+                    <PlusIcon className="size-4 shrink-0" />
+                    Adicionar tarefa
+                  </AddTaskFormModal>
                 </CardContent>
               </Card>
 
               {/* CHART */}
-              <div className="flex h-full items-center justify-center">
+              <div className="flex flex-col h-full gap-6">
                 <TaskChartArea />
               </div>
             </div>

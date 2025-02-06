@@ -9,17 +9,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import { Button } from '../ui/button'
 import { TaskForm } from './task-form'
 
-export const AddTaskFormModal = () => {
+type Props = {
+  children: ReactNode
+}
+
+export const AddTaskFormModal = ({ children }: Props) => {
   const [open, setOpen] = useState(false)
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button>Adicionar uma tarefa</Button>
+        <Button>{children}</Button>
       </DialogTrigger>
       {/* MODAL CONTENT */}
       <DialogContent>
