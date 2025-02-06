@@ -2,6 +2,15 @@ import { db } from '@/lib/prisma'
 import type { TaskFormType } from '@/schemas/task-form-schema'
 import { getCurrentMonth } from '@/utils/current-month'
 
+export const getTaskService = async (userId: string) => {
+  const tasks = await db.task.findMany({
+    where: { userId: userId },
+    orderBy: { createdAt: 'desc' },
+    take: 10,
+  })
+  return tasks
+}
+
 export const createTaskService = async (userId: string, data: TaskFormType) => {
   await db.user.upsert({
     where: { id: userId },
@@ -19,29 +28,6 @@ export const createTaskService = async (userId: string, data: TaskFormType) => {
   })
 
   return task
-}
-
-export const getTaskService = async (userId: string) => {
-  const tasks = await db.task.findMany({
-    where: { userId: userId },
-    orderBy: { createdAt: 'desc' },
-    take: 10,
-  })
-  return tasks
-}
-
-export const removeTaskService = async (userId: string, taskId: string) => {
-  const task = await db.task.delete({
-    where: { userId: userId, id: taskId },
-  })
-  return task
-}
-
-export const removeAllTaskService = async (userId: string) => {
-  const tasks = await db.task.deleteMany({
-    where: { userId: userId },
-  })
-  return tasks
 }
 
 export const updateTaskService = async (
@@ -63,7 +49,7 @@ export const updateTaskService = async (
   return task
 }
 
-export const getTaskCountByStatusService = async (userId: string) => {
+export const countTaskCountByStatusService = async (userId: string) => {
   const date = new Date(Date.now()) // Provisório, enquanto nao tem sistema de calendário/agendamento
   const { startOfMonth, endOfMonth } = getCurrentMonth(date)
 
@@ -118,6 +104,27 @@ export const getTaskCountByStatusService = async (userId: string) => {
   ])
 
   return { pendding, doing, completed, canceled }
+}
+
+export const countTotalTasksService = async (userId: string) => {
+  const totalTasks = await db.task.count({
+    where: { userId: userId },
+  })
+  return totalTasks ?? 0
+}
+
+export const removeTaskService = async (userId: string, taskId: string) => {
+  const task = await db.task.delete({
+    where: { userId: userId, id: taskId },
+  })
+  return task
+}
+
+export const removeAllTaskService = async (userId: string) => {
+  const tasks = await db.task.deleteMany({
+    where: { userId: userId },
+  })
+  return tasks
 }
 
 export const searchTaskService = async (userId: string, search: string) => {

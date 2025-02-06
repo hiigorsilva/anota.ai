@@ -1,4 +1,4 @@
-import { getTaskCountByStatusAction } from '@/actions/task/get-task-count-by-status'
+import { countTaskByStatusAction } from '@/actions/task'
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import { Badge } from '../ui/badge'
 import { TaskBarChart } from './task-bar-chart'
 
 export const TaskChartArea = async () => {
-  const countTasks = await getTaskCountByStatusAction()
+  const countTasks = await countTaskByStatusAction()
   if (!countTasks) return 0
 
   const currentMonth = new Date().getMonth().toLocaleString()
