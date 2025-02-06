@@ -1,9 +1,19 @@
-import { CalendarIcon, NotebookTextIcon, Settings2Icon } from 'lucide-react'
+import {
+  CalendarIcon,
+  CircleGaugeIcon,
+  NotebookTextIcon,
+  Settings2Icon,
+} from 'lucide-react'
 
 export const navLinks = [
   {
-    name: 'Tarefas',
+    name: 'Dashboard',
     href: '/',
+    icon: <CircleGaugeIcon className="size-4 shrink-0" />,
+  },
+  {
+    name: 'Tarefas',
+    href: '/tasks',
     icon: <NotebookTextIcon className="size-4 shrink-0" />,
   },
   {
