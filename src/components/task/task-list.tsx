@@ -1,4 +1,4 @@
-import { getTaskAction } from '@/actions/task/get-task'
+import { getTaskAction } from '@/actions/task'
 import { getStatusColor } from '@/data/task/status-options'
 import { formatTime } from '@/utils/format-time'
 import { NotebookPenIcon } from 'lucide-react'
@@ -69,8 +69,8 @@ export const TaskList = async () => {
                   {/* TODO: Resolver BUG ao clicar no título / abrir modal de edição */}
                   <DialogTrigger
                     className={`hover:underline ${
-                      task.status === 'Cancelado' || task.status === 'Concluído'
-                        ? 'line-through'
+                      task.status === 'Cancelado'
+                        ? 'text-red-500 line-through'
                         : ''
                     }`}
                   >

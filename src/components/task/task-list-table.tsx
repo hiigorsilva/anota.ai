@@ -72,8 +72,8 @@ export const TaskListTable = async ({ tasks }: Props) => {
                   {/* TODO: Resolver BUG ao clicar no título / abrir modal de edição */}
                   <DialogTrigger
                     className={`hover:underline ${
-                      task.status === 'Cancelado' || task.status === 'Concluído'
-                        ? 'line-through'
+                      task.status === 'Cancelado'
+                        ? 'text-red-500 line-through'
                         : ''
                     }`}
                   >
