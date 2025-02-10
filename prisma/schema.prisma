@@ -15,7 +15,11 @@ enum TASK_STATUS {
 }
 
 model User {
-  id    String @id
+  id        String  @id
+  firstName String?
+  fullName  String?
+  imageUrl  String?
+
   tasks Task[]
 }
 
