@@ -18,16 +18,12 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
-import { currentUser } from '@clerk/nextjs/server'
+import { getUserClerk } from '@/lib/clerk'
 import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 const Home = async () => {
-  const user = await currentUser()
-  if (!user?.id) {
-    redirect('/sign-in')
-  }
+  await getUserClerk()
 
   return (
     <div className="flex flex-col min-h-dvh h-full w-full">
@@ -45,7 +41,7 @@ const Home = async () => {
               <Card className="bg-transparent border-none">
                 <CardHeader className="pt-0 px-0">
                   <CardTitle>Crie uma nova tarefa</CardTitle>
-                  <CardDescription>
+                  <CardDescription className="sr-only">
                     Clique no botão abaixo para criar uma nova tarefa
                   </CardDescription>
                 </CardHeader>
@@ -76,7 +72,7 @@ const Home = async () => {
                     <CardTitle>Últimas tarefas criadas</CardTitle>
                     <DeleteAllTaskButton />
                   </div>
-                  <CardDescription>
+                  <CardDescription className="sr-only">
                     Conclua todas e garanta a produtividade do dia.
                   </CardDescription>
                 </CardHeader>

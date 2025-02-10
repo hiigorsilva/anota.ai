@@ -1,17 +1,13 @@
 'use server'
 
+import { getUserClerk } from '@/lib/clerk'
 import type { TaskFormType } from '@/schemas/task-form-schema'
 import * as service from '@/services/task'
-import { currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 export const getTaskAction = async () => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      return
-    }
+    const user = await getUserClerk()
 
     const tasks = await service.getTaskService(user.id)
 
@@ -23,10 +19,7 @@ export const getTaskAction = async () => {
 
 export const countTaskByStatusAction = async () => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      redirect('/sign-in')
-    }
+    const user = await getUserClerk()
 
     const task = await service.countTaskCountByStatusService(user.id)
 
@@ -41,10 +34,7 @@ export const countTaskByStatusAction = async () => {
 
 export const countTotalTasksAction = async () => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      return
-    }
+    const user = await getUserClerk()
 
     const totalTasks = await service.countTotalTasksService(user.id)
     return totalTasks
@@ -55,10 +45,7 @@ export const countTotalTasksAction = async () => {
 
 export const createTaskAction = async (task: TaskFormType) => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      redirect('/sign-in')
-    }
+    const user = await getUserClerk()
 
     await service.createTaskService(user.id, task)
 
@@ -74,10 +61,7 @@ export const updateTaskAction = async (
   newTask: TaskFormType
 ) => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      redirect('/sign-in')
-    }
+    const user = await getUserClerk()
 
     const task = await service.updateTaskService(user.id, currentTask, newTask)
 
@@ -92,10 +76,7 @@ export const updateTaskAction = async (
 
 export const removeTaskAction = async (taskId: string) => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      redirect('/sign-in')
-    }
+    const user = await getUserClerk()
 
     await service.removeTaskService(user.id, taskId)
 
@@ -108,10 +89,7 @@ export const removeTaskAction = async (taskId: string) => {
 
 export const removeAllTaskAction = async () => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      redirect('/sign-in')
-    }
+    const user = await getUserClerk()
 
     await service.removeAllTaskService(user.id)
 

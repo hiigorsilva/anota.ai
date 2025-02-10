@@ -1,7 +1,6 @@
 import { accountGroup } from '@/data/accounts/team-switcher'
-import { currentUser } from '@clerk/nextjs/server'
+import { getUserClerk } from '@/lib/clerk'
 import { ChevronsUpDownIcon, PlusCircleIcon } from 'lucide-react'
-import { redirect } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import {
@@ -16,10 +15,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 export const TeamSwitcher = async () => {
-  const user = await currentUser()
-  if (!user) {
-    redirect('/sign-in')
-  }
+  const user = await getUserClerk()
 
   return (
     <Popover>

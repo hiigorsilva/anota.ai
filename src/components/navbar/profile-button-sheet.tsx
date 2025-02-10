@@ -1,5 +1,4 @@
-import { currentUser } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
+import { getUserClerk } from '@/lib/clerk'
 import type { ReactNode } from 'react'
 import { ToggleTheme } from '../toggle-theme'
 import { Button } from '../ui/button'
@@ -20,10 +19,7 @@ type Props = {
   children: ReactNode
 }
 export const ProfileButtonSheet = async ({ children }: Props) => {
-  const user = await currentUser()
-  if (!user) {
-    redirect('/sign-in')
-  }
+  const user = await getUserClerk()
 
   return (
     <Sheet>

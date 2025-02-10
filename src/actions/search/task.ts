@@ -1,15 +1,11 @@
 'use server'
 
+import { getUserClerk } from '@/lib/clerk'
 import { searchTaskService } from '@/services/task'
-import { currentUser } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
 
 export const searchTaskAction = async (search: string) => {
   try {
-    const user = await currentUser()
-    if (!user) {
-      redirect('/sign-in')
-    }
+    const user = await getUserClerk()
 
     const tasks = await searchTaskService(user.id, search)
     return tasks
