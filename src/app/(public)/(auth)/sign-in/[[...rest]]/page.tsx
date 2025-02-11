@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import { signinAction } from '@/actions/auth'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -14,9 +15,15 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { type SignInType, signinSchema } from '@/schemas/signin-schema'
-import { ArrowRightIcon, EyeClosedIcon, EyeIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  EyeClosedIcon,
+  EyeIcon,
+  Loader2Icon,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -30,7 +37,16 @@ const SignInPage = () => {
   })
 
   const onSubmit = async (data: SignInType) => {
-    console.log(data)
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      await signinAction(data)
+      toast.success('Usuário criado com sucesso')
+    } catch (err) {
+      toast.error('Erro ao criar usuário')
+      console.error('❌ Erro ao criar usuário: ', err)
+    } finally {
+      form.reset()
+    }
   }
 
   return (
@@ -40,11 +56,13 @@ const SignInPage = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="max-w-md w-full flex flex-col gap-4 p-6 bg-card rounded-lg"
         >
+          {/* TITLE */}
           <header>
             <h1 className="font-semibold text-xl text-foreground tracking-tight">
               Faça seu login
             </h1>
           </header>
+
           <FormField
             control={form.control}
             name="email"
@@ -89,13 +107,24 @@ const SignInPage = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">
-            <span>Entrar</span>
-            <ArrowRightIcon className="size-4 shrink-0" />
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            {/* LOADING */}
+            {!form.formState.isSubmitting && (
+              <>
+                <span>Entrar</span>
+                <ArrowRightIcon className="size-4 shrink-0" />
+              </>
+            )}
+
+            {/* DEFAULT */}
+            {form.formState.isSubmitting && (
+              <Loader2Icon className="size-4 shrink-0 animate-spin" />
+            )}
           </Button>
         </form>
       </Form>
 
+      {/* LINK */}
       <p className="text-sm text-center text-muted-foreground">
         Ainda não possui uma conta?{' '}
         <Link href="/sign-up" className="text-foreground hover:underline">
