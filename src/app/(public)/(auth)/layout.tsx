@@ -13,7 +13,7 @@ export default function SignInLayout({
 }>) {
   return (
     <div className="flex flex-col flex-1 w-full">
-      <ContainerApp className="flex flex-1 flex-col items-center justify-center gap-8 py-8">
+      <ContainerApp className="flex flex-1 flex-col items-center justify-center gap-6 py-8">
         <Logo />
         {children}
       </ContainerApp>

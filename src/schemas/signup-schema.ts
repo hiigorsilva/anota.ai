@@ -1,12 +1,9 @@
 import { z } from 'zod'
 
 export const signupSchema = z.object({
-  firstName: z
-    .string({ required_error: 'Campo primeiro nome é obrigatório' })
-    .min(2),
-  lastName: z
-    .string({ required_error: 'Campo sobrenome é obrigatório' })
-    .min(2),
+  fullName: z
+    .string({ required_error: 'Campo nome é obrigatório' })
+    .min(2, { message: 'Nome deve conter ao menos 2 caracteres' }),
   email: z
     .string({ required_error: 'Campo email é obrigatório' })
     .email({ message: 'Insira um email valido' }),
