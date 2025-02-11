@@ -1,5 +1,6 @@
-import { getUserClerk } from '@/lib/clerk'
-import type { ReactNode } from 'react'
+'use client'
+
+import { type ReactNode, useState } from 'react'
 import { ToggleTheme } from '../toggle-theme'
 import { Button } from '../ui/button'
 import { Separator } from '../ui/separator'
@@ -18,15 +19,15 @@ import { SignOutButton } from './sign-out-button'
 type Props = {
   children: ReactNode
 }
-export const ProfileButtonSheet = async ({ children }: Props) => {
-  const user = await getUserClerk()
+export const ProfileButtonSheet = ({ children }: Props) => {
+  const [open, setOpen] = useState(false)
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col gap-6">
         <SheetHeader>
-          <SheetTitle>Olá, {user.firstName} 😉</SheetTitle>
+          <SheetTitle>Olá, Usuário 😉</SheetTitle>
           <SheetDescription>Teste</SheetDescription>
         </SheetHeader>
 
