@@ -1,5 +1,6 @@
 'use client'
 
+import { getStatusColor } from '@/data/task/status-options'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import {
   type ChartConfig,
@@ -19,10 +20,26 @@ type Props = {
 
 export const TaskBarChart = ({ countTasks }: Props) => {
   const chartData = [
-    { status: 'Pendente', count: countTasks.pendding, fill: '#9CA3AF' },
-    { status: 'Fazendo', count: countTasks.doing, fill: '#FACC15' },
-    { status: 'Concluído', count: countTasks.completed, fill: '#4ADE80' },
-    { status: 'Cancelado', count: countTasks.canceled, fill: '#FB7185' },
+    {
+      status: 'Pendente',
+      count: countTasks.pendding,
+      fill: getStatusColor('Pendente'),
+    },
+    {
+      status: 'Fazendo',
+      count: countTasks.doing,
+      fill: getStatusColor('Fazendo'),
+    },
+    {
+      status: 'Concluído',
+      count: countTasks.completed,
+      fill: getStatusColor('Concluído'),
+    },
+    {
+      status: 'Cancelado',
+      count: countTasks.canceled,
+      fill: getStatusColor('Cancelado'),
+    },
   ]
 
   const chartConfig = {
