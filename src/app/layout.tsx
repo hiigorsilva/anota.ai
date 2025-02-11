@@ -33,7 +33,7 @@ export default function RootLayout({
           className={`${inter.className} min-h-dvh w-full flex flex-col antialiased`}
         >
           <RootProviders>
-            <div className="flex-1 h-full w-full">{children}</div>
+            <div className="flex flex-col flex-1 h-full w-full">{children}</div>
             <Footer />
           </RootProviders>
         </body>
