@@ -1,14 +1,13 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-
-// ROTAS PÚBLICAS QUE NÃO SÃO PROTEGIDAS PELO CLERK
 const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)'])
-
-// PROTEÇÃO DE ROTAS PARA TODAS RESTANTES
 export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
     await auth.protect()
   }
 })
+// ------------------------------------------------------
+
+export { auth as middleware } from '@/auth'
 
 export const config = {
   matcher: [

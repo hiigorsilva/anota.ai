@@ -3,7 +3,7 @@ import { Logo } from '@/components/logo'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Login',
+  title: 'Entrar',
 }
 
 export default function SignInLayout({

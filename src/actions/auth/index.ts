@@ -1,21 +1,38 @@
 'use server'
 
+import type { SignupResult } from '@/@types/index'
+import { signIn } from '@/auth'
 import type { SignInType } from '@/schemas/signin-schema'
 import type { SignUpType } from '@/schemas/signup-schema'
-import { createUser, findUserByEmail, loginUser } from '@/services/db/user'
+import { createUser, findUserByEmail } from '@/services/db/user'
 
 export const signinAction = async (data: SignInType) => {
   try {
-    await loginUser(data)
-  } catch (err) {
-    console.error('❌ Erro ao logar usuário: ', err)
-  }
-}
+    await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    })
 
-type SignupResult = {
-  success: boolean
-  message: string
-  error?: string
+    return {
+      success: true,
+      message: 'Login efetuado com sucesso',
+    }
+  } catch (err: any) {
+    console.error('❌ CREDENTIALS_ERROR: ', err)
+
+    if (err.type === 'CredentialsSignin') {
+      return {
+        success: false,
+        message: 'Email ou senha estão incorretos',
+      }
+    }
+
+    return {
+      success: false,
+      message: 'Oops! Algo deu errado',
+    }
+  }
 }
 
 export const signupAction = async (data: SignUpType): Promise<SignupResult> => {

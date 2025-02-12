@@ -1,13 +1,12 @@
 import { db } from '@/lib/db'
 import type { SignInType } from '@/schemas/signin-schema'
 import type { SignUpType } from '@/schemas/signup-schema'
-import { hashSync } from 'bcrypt-ts'
+import { compareSync, hashSync } from 'bcrypt-ts'
 
 export const findUserByEmail = async (email: string) => {
   try {
     const user = await db.user.findUnique({
       where: { email: email },
-      omit: { password: true },
     })
 
     return {
@@ -20,6 +19,42 @@ export const findUserByEmail = async (email: string) => {
       exists: false,
       error: err instanceof Error ? err.message : 'UNKNOWN_ERROR',
     }
+  }
+}
+
+type SignInCredentialsType = {
+  email: string
+  fullName: string
+}
+
+export const findUserByCredentials = async (
+  email: string,
+  password: string
+): Promise<SignInCredentialsType | null> => {
+  try {
+    const user = await db.user.findFirst({
+      where: {
+        email: email,
+      },
+    })
+
+    if (!user) {
+      return null
+    }
+
+    const isPasswordValid = compareSync(password, user.password)
+    if (isPasswordValid) {
+      return {
+        email: user.email,
+        fullName: user.fullName,
+      }
+    }
+
+    return null
+  } catch (err) {
+    console.error('❌ AUTHENTICATION_ERROR: ', err)
+    err instanceof Error ? err.message : 'UNKNOWN_ERROR'
+    return null
   }
 }
 

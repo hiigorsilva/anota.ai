@@ -38,8 +38,14 @@ const SignInPage = () => {
 
   const onSubmit = async (data: SignInType) => {
     try {
-      await signinAction(data)
-      toast.success('Usuário criado com sucesso')
+      const credentials = await signinAction(data)
+
+      if (!credentials.success) {
+        toast.error(credentials.message)
+        return
+      }
+
+      toast.success(credentials.message)
     } catch (err) {
       toast.error('Erro ao criar usuário')
       console.error('❌ Erro ao criar usuário: ', err)
