@@ -38,7 +38,6 @@ const SignInPage = () => {
 
   const onSubmit = async (data: SignInType) => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
       await signinAction(data)
       toast.success('Usuário criado com sucesso')
     } catch (err) {

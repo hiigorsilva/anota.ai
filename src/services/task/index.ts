@@ -1,4 +1,4 @@
-import { db } from '@/lib/prisma'
+import { db } from '@/lib/db'
 import type { TaskFormType } from '@/schemas/task-form-schema'
 import { getCurrentMonth } from '@/utils/current-month'
 

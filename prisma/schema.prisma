@@ -7,20 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum TASK_STATUS {
-  Pendente
-  Fazendo
-  Concluído
-  Cancelado
-}
-
 model User {
-  id        String  @id
-  firstName String?
+  id        String   @id @default(uuid())
   fullName  String?
-  imageUrl  String?
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   tasks Task[]
+
+  @@map("users")
 }
 
 model Task {
@@ -34,4 +31,11 @@ model Task {
   updatedAt   DateTime    @updatedAt
 
   @@map("tasks")
+}
+
+enum TASK_STATUS {
+  Pendente
+  Fazendo
+  Concluído
+  Cancelado
 }

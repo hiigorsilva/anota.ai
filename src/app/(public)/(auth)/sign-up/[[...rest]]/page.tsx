@@ -39,14 +39,25 @@ const SignUpPage = () => {
 
   const onSubmit = async (data: SignUpType) => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      await signupAction(data)
-      toast.success('Usuário criado com sucesso')
+      const user = await signupAction(data)
+
+      if (user.error) {
+        toast.error(user.message)
+        return
+      }
+
+      if (!user.success) {
+        toast.error(user.message)
+        return
+      }
+
+      if (user.success) {
+        toast.success(user.message)
+        form.reset()
+      }
     } catch (err) {
-      toast.error('Erro ao criar usuário')
-      console.error('❌ Erro ao criar usuário: ', err)
-    } finally {
-      form.reset()
+      toast.error('Algo deu errado. Tente novamente mais tarde!')
+      console.error('Form submission failed:', err)
     }
   }
 

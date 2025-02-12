@@ -31,15 +31,16 @@ export const TaskList = async () => {
 
   return (
     <Table>
-      {!tasks && (
-        <TableCaption className="py-8">
-          <NotebookPenIcon
-            strokeWidth={1.5}
-            className="text-muted-foreground mb-2 size-6"
-          />
-          Nenhuma tarefa cadastrada.
-        </TableCaption>
-      )}
+      {!tasks ||
+        (tasks.length === 0 && (
+          <TableCaption className="py-8">
+            <NotebookPenIcon
+              strokeWidth={1.5}
+              className="text-muted-foreground mb-2 size-6"
+            />
+            Nenhuma tarefa cadastrada.
+          </TableCaption>
+        ))}
       <TableHeader>
         <TableRow>
           <TableHead className="w-36 text-nowrap">Data</TableHead>
