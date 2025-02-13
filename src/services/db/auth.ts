@@ -1,3 +1,4 @@
+import type { SignInCredentialsType } from '@/@types'
 import { db } from '@/lib/db'
 import type { SignInType } from '@/schemas/signin-schema'
 import type { SignUpType } from '@/schemas/signup-schema'
@@ -20,11 +21,6 @@ export const findUserByEmail = async (email: string) => {
       error: err instanceof Error ? err.message : 'UNKNOWN_ERROR',
     }
   }
-}
-
-type SignInCredentialsType = {
-  email: string
-  fullName: string
 }
 
 export const findUserByCredentials = async (

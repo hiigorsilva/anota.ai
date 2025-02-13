@@ -1,4 +1,4 @@
-import { countTaskByStatusAction } from '@/actions/task'
+import { countTaskByStatusAction } from '@/actions/(antigo)/task'
 import {
   Card,
   CardContent,

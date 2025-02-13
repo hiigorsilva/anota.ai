@@ -1,4 +1,4 @@
-import { getTaskAction } from '@/actions/task'
+import { getTaskAction } from '@/actions/(antigo)/task'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'

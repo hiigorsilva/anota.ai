@@ -1,4 +1,4 @@
-import { getTaskAction } from '@/actions/task'
+import { getTaskAction } from '@/actions/(antigo)/task'
 import { getStatusColor } from '@/data/task/status-options'
 import { formatTime } from '@/utils/format-time'
 import { NotebookPenIcon } from 'lucide-react'

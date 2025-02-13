@@ -1,4 +1,4 @@
-import { searchTaskAction } from '@/actions/search/task'
+import { searchTaskAction } from '@/actions/(antigo)/search/task'
 import { ContainerApp } from '@/components/container-app'
 import { Navbar } from '@/components/navbar'
 import { TaskListTable } from '@/components/task/task-list-table'

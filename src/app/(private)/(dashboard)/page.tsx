@@ -18,13 +18,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
-import { getUserClerk } from '@/lib/clerk'
 import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 
 const Home = async () => {
-  await getUserClerk()
-
   return (
     <div className="flex flex-col min-h-dvh h-full w-full">
       <Navbar />

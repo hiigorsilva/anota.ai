@@ -1,5 +1,4 @@
 import { accountGroup } from '@/data/accounts/team-switcher'
-import { getUserClerk } from '@/lib/clerk'
 import { ChevronsUpDownIcon, PlusCircleIcon } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
@@ -15,8 +14,6 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 export const TeamSwitcher = async () => {
-  const user = await getUserClerk()
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -29,14 +26,12 @@ export const TeamSwitcher = async () => {
         >
           <Avatar className="size-6 shrink-0">
             <AvatarImage
-              src={
-                user.imageUrl || `http://avatar.vercel.sh/${user.firstName}.png`
-              }
-              alt={user.firstName || 'Avatar do usuário'}
+              src="http://avatar.vercel.sh/profile.png"
+              alt="Avatar do usuário"
             />
-            <AvatarFallback>{user.firstName?.charAt(0)}</AvatarFallback>
+            <AvatarFallback>H</AvatarFallback>
           </Avatar>
-          <span className="flex-1 truncate">{user.fullName}</span>
+          <span className="flex-1 truncate">Higor</span>
           <ChevronsUpDownIcon className="text-muted-foreground size-4 shrink-0" />
         </Button>
       </PopoverTrigger>

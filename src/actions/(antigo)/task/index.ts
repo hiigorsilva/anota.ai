@@ -1,17 +1,14 @@
 'use server'
 
-import { getUserClerk } from '@/lib/clerk'
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import * as service from '@/services/task'
+// import * as service from '@/services/task'
 import { revalidatePath } from 'next/cache'
 
 export const getTaskAction = async () => {
   try {
-    const user = await getUserClerk()
+    // const tasks = await service.getTaskService(user.id)
 
-    const tasks = await service.getTaskService(user.id)
-
-    return tasks ?? []
+    return []
   } catch (err) {
     console.error('❌ Erro ao listar tarefas: ', err)
   }
@@ -19,14 +16,12 @@ export const getTaskAction = async () => {
 
 export const countTaskByStatusAction = async () => {
   try {
-    const user = await getUserClerk()
-
-    const task = await service.countTaskCountByStatusService(user.id)
+    // const task = await service.countTaskCountByStatusService(user.id)
 
     revalidatePath('/')
     revalidatePath('/tasks')
 
-    return task ?? 0
+    return 0
   } catch (err) {
     console.error('❌ Erro ao listar quantidade de tarefas por status: ', err)
   }
@@ -34,20 +29,16 @@ export const countTaskByStatusAction = async () => {
 
 export const countTotalTasksAction = async () => {
   try {
-    const user = await getUserClerk()
-
-    const totalTasks = await service.countTotalTasksService(user.id)
-    return totalTasks
+    // const totalTasks = await service.countTotalTasksService(user.id)
+    return 0
   } catch (err) {
     console.error('❌ Erro ao pegar o total de tarefas: ', err)
   }
 }
 
-export const createTaskAction = async (task: TaskFormType) => {
+export const createTaskAction = async (_task: TaskFormType) => {
   try {
-    const user = await getUserClerk()
-
-    await service.createTaskService(user.id, task)
+    // await service.createTaskService(user.id, task)
 
     revalidatePath('/')
     revalidatePath('/tasks')
@@ -57,28 +48,24 @@ export const createTaskAction = async (task: TaskFormType) => {
 }
 
 export const updateTaskAction = async (
-  currentTask: TaskFormType,
-  newTask: TaskFormType
+  _currentTask: TaskFormType,
+  _newTask: TaskFormType
 ) => {
   try {
-    const user = await getUserClerk()
-
-    const task = await service.updateTaskService(user.id, currentTask, newTask)
+    // const task = await service.updateTaskService(user.id, currentTask, newTask)
 
     revalidatePath('/')
     revalidatePath('/tasks')
 
-    return task
+    // return task
   } catch (err) {
     console.error('❌ Erro ao adicionar tarefa: ', err)
   }
 }
 
-export const removeTaskAction = async (taskId: string) => {
+export const removeTaskAction = async (_taskId: string) => {
   try {
-    const user = await getUserClerk()
-
-    await service.removeTaskService(user.id, taskId)
+    // await service.removeTaskService(user.id, taskId)
 
     revalidatePath('/')
     revalidatePath('/tasks')
@@ -89,9 +76,7 @@ export const removeTaskAction = async (taskId: string) => {
 
 export const removeAllTaskAction = async () => {
   try {
-    const user = await getUserClerk()
-
-    await service.removeAllTaskService(user.id)
+    // await service.removeAllTaskService(user.id)
 
     revalidatePath('/')
     revalidatePath('/tasks')
