@@ -1,4 +1,3 @@
-import { getTaskAction } from '@/actions/(antigo)/task'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
@@ -7,12 +6,6 @@ import { TaskListTable } from '@/components/task/task-list-table'
 import { PlusIcon } from 'lucide-react'
 
 const TasksPage = async () => {
-  const tasks = await getTaskAction()
-
-  if (!tasks) {
-    return null
-  }
-
   return (
     <div className="flex flex-col gap-6 min-h-dvh h-full w-full">
       <Navbar />
