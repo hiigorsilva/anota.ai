@@ -1,6 +1,7 @@
 'use server'
 
-import { signIn, signOut } from '@/auth'
+import { auth, signIn, signOut } from '@/auth'
+import { redirect } from 'next/navigation'
 
 export const loginAction = async () => {
   await signIn('google')
@@ -8,4 +9,14 @@ export const loginAction = async () => {
 
 export const logoutAction = async () => {
   await signOut()
+}
+
+export const sessionUser = async () => {
+  const session = await auth()
+
+  if (!session?.user) {
+    redirect('/sign-in')
+  }
+
+  return session.user
 }
