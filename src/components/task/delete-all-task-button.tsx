@@ -1,9 +1,7 @@
 'use client'
 
-import { removeAllTaskAction } from '@/actions/(antigo)/task'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
-import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -18,17 +16,7 @@ import {
 
 export const DeleteAllTaskButton = () => {
   const [open, setOpen] = useState(false)
-  const handleDeleteAllTask = async () => {
-    try {
-      await removeAllTaskAction()
-      toast.success('Tarefas excluidas com sucesso')
-    } catch (err) {
-      toast.error('Erro ao excluir todas as tarefas')
-      console.error('❌ Erro ao excluir todas as tarefas: ', err)
-    } finally {
-      setOpen(false)
-    }
-  }
+  const handleDeleteAllTask = async () => {}
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>

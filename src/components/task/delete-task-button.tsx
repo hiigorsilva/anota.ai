@@ -1,10 +1,8 @@
 'use client'
 
-import { removeTaskAction } from '@/actions/(antigo)/task'
 import type { Task } from '@prisma/client'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
-import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -25,15 +23,7 @@ export const DeleteTaskButton = ({ task }: Props) => {
   const [open, setOpen] = useState(false)
 
   const handleRemoveTask = async () => {
-    try {
-      removeTaskAction(task.id)
-      toast.success('Tarefa removida com sucesso')
-    } catch (err) {
-      toast.error('Erro ao remover tarefa')
-      console.error('❌ Erro ao remover tarefa: ', err)
-    } finally {
-      setOpen(false)
-    }
+    console.log(task)
   }
 
   return (

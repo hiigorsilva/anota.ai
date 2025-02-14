@@ -1,13 +1,11 @@
 'use client'
 
-import { createTaskAction } from '@/actions/(antigo)/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, PlusCircleIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {
@@ -34,7 +32,7 @@ type Props = {
   setOpen: (open: boolean) => void
 }
 
-export const TaskForm = ({ children, setOpen }: Props) => {
+export const TaskForm = ({ children }: Props) => {
   const form = useForm<TaskFormType>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
@@ -44,18 +42,7 @@ export const TaskForm = ({ children, setOpen }: Props) => {
     },
   })
 
-  const onSubmit = async (task: TaskFormType) => {
-    try {
-      await createTaskAction(task)
-      toast.success('Tarefa adicionada com sucesso')
-    } catch (err) {
-      toast.error('Erro ao adicionar tarefa')
-      console.error('❌ Erro ao adicionar tarefa: ', err)
-    } finally {
-      setOpen(false)
-      form.reset()
-    }
-  }
+  const onSubmit = async () => {}
 
   return (
     <Form {...form}>

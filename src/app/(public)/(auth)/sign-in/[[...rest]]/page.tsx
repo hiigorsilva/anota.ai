@@ -1,6 +1,6 @@
 'use client'
 
-import { signInAction } from '@/actions/auth'
+import { loginAction } from '@/actions/auth'
 import Google from '@/assets/icon/google.svg'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,17 +11,10 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import Image from 'next/image'
-import { toast } from 'sonner'
 
 const SignInPage = () => {
   const handleLoginForm = async () => {
-    const { message, success } = await signInAction()
-
-    if (!success) {
-      toast.error(message)
-      return
-    }
-    toast.success(message)
+    await loginAction()
   }
 
   return (

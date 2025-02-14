@@ -1,12 +1,11 @@
 'use client'
-
-import { signOut } from '@/auth'
+import { logoutAction } from '@/actions/auth'
 import { LogOutIcon } from 'lucide-react'
 import { Button } from '../ui/button'
 
 export const SignOutButton = () => {
   const handleSignOut = async () => {
-    await signOut()
+    await logoutAction()
   }
 
   return (

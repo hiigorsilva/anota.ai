@@ -1,21 +1,11 @@
 'use server'
 
-import { signIn } from '@/auth'
+import { signIn, signOut } from '@/auth'
 
-export const signInAction = async () => {
-  try {
-    await signIn('google')
+export const loginAction = async () => {
+  await signIn('google')
+}
 
-    return {
-      success: true,
-      message: 'Logado com sucesso',
-    }
-  } catch (err) {
-    console.error('❌ SIGIN_ERROR: ', err)
-
-    return {
-      success: false,
-      message: 'Erro ao fazer login',
-    }
-  }
+export const logoutAction = async () => {
+  await signOut()
 }

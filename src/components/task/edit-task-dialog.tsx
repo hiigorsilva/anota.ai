@@ -1,13 +1,11 @@
 'use client'
 
-import { updateTaskAction } from '@/actions/(antigo)/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2Icon, PencilIcon } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { StatusSelectItem } from '../form/status-select-item'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -55,18 +53,7 @@ export const EditTaskDialog = ({ children, currentTask }: Props) => {
 
   const [open, setOpen] = useState(false)
 
-  const onSubmit = async (newTask: TaskFormType) => {
-    try {
-      await updateTaskAction(currentTask, newTask)
-      toast.success('Tarefa editada com sucesso')
-    } catch (err) {
-      toast.error('Erro ao editar tarefa')
-      console.error('❌ Erro ao editar tarefa: ', err)
-    } finally {
-      setOpen(false)
-      form.reset()
-    }
-  }
+  const onSubmit = async () => {}
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
