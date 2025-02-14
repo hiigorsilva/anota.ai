@@ -1,11 +1,13 @@
 'use client'
 
+import { createTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, PlusCircleIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {
@@ -32,7 +34,7 @@ type Props = {
   setOpen: (open: boolean) => void
 }
 
-export const TaskForm = ({ children }: Props) => {
+export const TaskForm = ({ children, setOpen }: Props) => {
   const form = useForm<TaskFormType>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
@@ -42,7 +44,22 @@ export const TaskForm = ({ children }: Props) => {
     },
   })
 
-  const onSubmit = async () => {}
+  const onSubmit = async (data: TaskFormType) => {
+    try {
+      const task = await createTaskAction(data)
+      if (!task.success) {
+        toast.error(task.message)
+        return
+      }
+      toast.success(task.message)
+    } catch (err) {
+      console.error('❌ CREATE_TASK_ERROR', err)
+      toast.error('Ops! Houve um erro. Tente novamente mais tarde')
+    } finally {
+      setOpen(false)
+      form.reset()
+    }
+  }
 
   return (
     <Form {...form}>
