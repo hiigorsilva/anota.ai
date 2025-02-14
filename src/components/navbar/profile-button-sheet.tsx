@@ -1,5 +1,6 @@
 'use client'
 
+import type { User } from '@prisma/client'
 import { type ReactNode, useState } from 'react'
 import { ToggleTheme } from '../toggle-theme'
 import { Button } from '../ui/button'
@@ -17,9 +18,10 @@ import { navLinks } from './links'
 import { SignOutButton } from './sign-out-button'
 
 type Props = {
+  user: User | null
   children: ReactNode
 }
-export const ProfileButtonSheet = ({ children }: Props) => {
+export const ProfileButtonSheet = ({ user, children }: Props) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -27,8 +29,12 @@ export const ProfileButtonSheet = ({ children }: Props) => {
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col gap-6">
         <SheetHeader>
-          <SheetTitle>Olá, Usuário 😉</SheetTitle>
-          <SheetDescription>Teste</SheetDescription>
+          <SheetTitle>Olá, {user?.name ?? 'Bem vindo'} 😉</SheetTitle>
+          <SheetDescription>
+            <span className="w-fit text-xs text-muted-foreground bg-foreground/10 px-2.5 py-0.5 rounded-full">
+              {user?.email ?? ''}
+            </span>
+          </SheetDescription>
         </SheetHeader>
 
         <Separator />

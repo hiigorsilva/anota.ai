@@ -1,3 +1,4 @@
+import { getUserAction } from '@/actions/user'
 import { MenuIcon } from 'lucide-react'
 import { ContainerApp } from '../container-app'
 import { Search } from '../search'
@@ -6,6 +7,8 @@ import { ProfileButtonSheet } from './profile-button-sheet'
 import { TeamSwitcher } from './team-switcher'
 
 export const Navbar = async () => {
+  const user = await getUserAction()
+
   return (
     <header className="flex items-center min-h-16 h-fit w-full">
       <ContainerApp className="flex justify-between items-center gap-8">
@@ -15,7 +18,7 @@ export const Navbar = async () => {
           <Search className="w-fit" />
 
           {/* PROFILE BUTTON */}
-          <ProfileButtonSheet>
+          <ProfileButtonSheet user={user}>
             <Button variant="outline" size="icon">
               <MenuIcon className="size-6 shrink-0" />
             </Button>
