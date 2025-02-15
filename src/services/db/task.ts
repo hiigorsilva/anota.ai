@@ -19,3 +19,18 @@ export const createTask = async (userId: string, data: TaskFormType) => {
     console.error('❌ CREATE_TASK_DB_ERROR', err)
   }
 }
+
+export const listDoingTasks = async (userId: string) => {
+  try {
+    const doingTasks = await db.task.findMany({
+      where: { id: userId, status: 'Fazendo' },
+      orderBy: { createdAt: 'desc' },
+    })
+    revalidatePath('/')
+
+    return doingTasks
+  } catch (err) {
+    console.error('❌ LIST_PENDDING_TASKS_DB_ERROR', err)
+    return null
+  }
+}
