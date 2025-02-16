@@ -1,7 +1,12 @@
 'use server'
 
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import { createTask, deleteTask, listDoingTasks } from '@/services/db/task'
+import {
+  createTask,
+  deleteAllTask,
+  deleteTask,
+  listDoingTasks,
+} from '@/services/db/task'
 import type { Task } from '@prisma/client'
 import { sessionUser } from '../auth'
 
@@ -67,6 +72,31 @@ export const deleteTaskAction = async (task: Task) => {
     return {
       success: false,
       message: 'Erro ao excluir tarefa',
+    }
+  }
+}
+
+export const deleteAllTaskAction = async () => {
+  try {
+    const session = await sessionUser()
+    if (!session.id) {
+      return {
+        success: false,
+        message: 'Usuário não autenticado',
+      }
+    }
+
+    await deleteAllTask(session.id)
+
+    return {
+      success: true,
+      message: 'Todas as tarefas foram excluídas',
+    }
+  } catch (err) {
+    console.error('❌ DELETE_TASK_ERROR', err)
+    return {
+      success: false,
+      message: 'Erro ao excluir todas as tarefas',
     }
   }
 }

@@ -47,3 +47,16 @@ export const deleteTask = async (userId: string, task: TaskFormType) => {
     console.error('❌ DELETE_TASK_DB_ERROR', err)
   }
 }
+
+export const deleteAllTask = async (userId: string) => {
+  try {
+    await db.task.deleteMany({
+      where: { userId: userId },
+    })
+
+    revalidatePath('/')
+    revalidatePath('/tasks')
+  } catch (err) {
+    console.error('❌ DELETE_TASK_DB_ERROR', err)
+  }
+}

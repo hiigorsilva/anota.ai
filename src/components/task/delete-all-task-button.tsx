@@ -1,7 +1,9 @@
 'use client'
 
+import { deleteAllTaskAction } from '@/actions/task'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -16,7 +18,22 @@ import {
 
 export const DeleteAllTaskButton = () => {
   const [open, setOpen] = useState(false)
-  const handleDeleteAllTask = async () => {}
+  const handleDeleteAllTask = async () => {
+    try {
+      const deleteAllTasks = await deleteAllTaskAction()
+      if (!deleteAllTasks.success) {
+        toast.error(deleteAllTasks.message)
+        return
+      }
+
+      toast.success(deleteAllTasks.message)
+    } catch (err) {
+      console.error('❌ DELETE_ALL_TASKS_ERROR', err)
+      toast.error('Ops! Houve um erro. Tente novamente mais tarde')
+    } finally {
+      setOpen(false)
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>

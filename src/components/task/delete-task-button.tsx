@@ -28,12 +28,10 @@ export const DeleteTaskButton = ({ task }: Props) => {
     try {
       const deleteTask = await deleteTaskAction(task)
       if (!deleteTask.success) {
-        console.log('Não deletou a tarefa')
         toast.error(deleteTask.message)
         return
       }
 
-      console.log('Deletou a tarefa')
       toast.success(deleteTask.message)
     } catch (err) {
       console.error('❌ DELETE_TASK_ERROR', err)
