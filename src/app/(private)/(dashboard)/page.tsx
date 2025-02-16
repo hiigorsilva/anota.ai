@@ -1,4 +1,4 @@
-import { getDoingTasks } from '@/actions/task'
+import { getDoingTasksAction } from '@/actions/task'
 import { TaskChartArea } from '@/components/chart/task-chart-area'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
@@ -23,7 +23,7 @@ import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 
 const Home = async () => {
-  const doingTaks = await getDoingTasks()
+  const doingTaks = await getDoingTasksAction()
 
   return (
     <div className="flex flex-col min-h-dvh h-full w-full">

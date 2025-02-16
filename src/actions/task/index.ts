@@ -1,8 +1,25 @@
 'use server'
 
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import { createTask, listDoingTasks } from '@/services/db/task'
+import { createTask, deleteTask, listDoingTasks } from '@/services/db/task'
+import type { Task } from '@prisma/client'
 import { sessionUser } from '../auth'
+
+export const getDoingTasksAction = async () => {
+  try {
+    const session = await sessionUser()
+    if (!session.id) {
+      throw new Error('Unauthenticated user')
+    }
+
+    const doingTasks = await listDoingTasks(session.id)
+
+    return doingTasks
+  } catch (err) {
+    console.error('❌ LIST_DOING_TASK_ERROR', err)
+    return null
+  }
+}
 
 export const createTaskAction = async (data: TaskFormType) => {
   try {
@@ -29,18 +46,27 @@ export const createTaskAction = async (data: TaskFormType) => {
   }
 }
 
-export const getDoingTasks = async () => {
+export const deleteTaskAction = async (task: Task) => {
   try {
     const session = await sessionUser()
     if (!session.id) {
-      throw new Error('Unauthenticated user')
+      return {
+        success: false,
+        message: 'Usuário não autenticado',
+      }
     }
 
-    const doingTasks = await listDoingTasks(session.id)
+    await deleteTask(session.id, task)
 
-    return doingTasks
+    return {
+      success: true,
+      message: 'Tarefa excluída com sucesso',
+    }
   } catch (err) {
-    console.error('❌ LIST_DOING_TASK_ERROR', err)
-    return null
+    console.error('❌ DELETE_TASK_ERROR', err)
+    return {
+      success: false,
+      message: 'Erro ao excluir tarefa',
+    }
   }
 }
