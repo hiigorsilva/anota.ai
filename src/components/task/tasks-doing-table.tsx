@@ -13,7 +13,7 @@ import { Button } from '../ui/button'
 import { DialogClose } from '../ui/dialog'
 import { DeleteTaskButton } from './delete-task-button'
 import { EditTaskDialog } from './edit-task-dialog'
-import { StatusLabel } from './status-label'
+import { StatusLabel } from './task-status-label'
 import { TaskTitleModal } from './task-title-modal'
 
 type Props = {

@@ -24,7 +24,7 @@ import {
 } from '../ui/table'
 import { DeleteTaskButton } from './delete-task-button'
 import { EditTaskDialog } from './edit-task-dialog'
-import { StatusLabel } from './status-label'
+import { StatusLabel } from './task-status-label'
 
 type Props = {
   tasks: Task[]

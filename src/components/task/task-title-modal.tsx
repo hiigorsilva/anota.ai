@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from '../ui/dialog'
 import { Separator } from '../ui/separator'
-import { StatusLabel } from './status-label'
+import { StatusLabel } from './task-status-label'
 
 type Props = {
   task: Task
