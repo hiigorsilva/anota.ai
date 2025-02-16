@@ -1,9 +1,10 @@
+import { getDoingTasks } from '@/actions/task'
 import { TaskChartArea } from '@/components/chart/task-chart-area'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
-import { TaskList } from '@/components/task/task-list'
+import { TaskDoingTable } from '@/components/task/tasks-doing-table'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -22,6 +23,8 @@ import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 
 const Home = async () => {
+  const doingTaks = await getDoingTasks()
+
   return (
     <div className="flex flex-col min-h-dvh h-full w-full">
       <Navbar />
@@ -74,7 +77,7 @@ const Home = async () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 px-0">
-                  <TaskList />
+                  <TaskDoingTable tasksDoing={doingTaks} />
                 </CardContent>
                 <CardFooter className="text-sm justify-center p-0">
                   <Button variant="link" size="sm" asChild>
