@@ -1,8 +1,10 @@
 'use client'
 
+import { deleteTaskAction } from '@/actions/task'
 import type { Task } from '@prisma/client'
 import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -22,8 +24,23 @@ type Props = {
 export const DeleteTaskButton = ({ task }: Props) => {
   const [open, setOpen] = useState(false)
 
-  const handleRemoveTask = async () => {
-    console.log(task)
+  const handleDeleteTask = async () => {
+    try {
+      const deleteTask = await deleteTaskAction(task)
+      if (!deleteTask.success) {
+        console.log('Não deletou a tarefa')
+        toast.error(deleteTask.message)
+        return
+      }
+
+      console.log('Deletou a tarefa')
+      toast.success(deleteTask.message)
+    } catch (err) {
+      console.error('❌ DELETE_TASK_ERROR', err)
+      toast.error('Ops! Houve um erro. Tente novamente mais tarde')
+    } finally {
+      setOpen(false)
+    }
   }
 
   return (
@@ -43,7 +60,7 @@ export const DeleteTaskButton = ({ task }: Props) => {
           <DialogClose asChild>
             <Button variant="secondary">Cancelar</Button>
           </DialogClose>
-          <Button onClick={handleRemoveTask} variant="destructive">
+          <Button onClick={handleDeleteTask} variant="destructive">
             Remover
           </Button>
         </DialogFooter>
