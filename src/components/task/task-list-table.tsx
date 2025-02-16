@@ -24,6 +24,7 @@ import {
 } from '../ui/table'
 import { DeleteTaskButton } from './delete-task-button'
 import { EditTaskDialog } from './edit-task-dialog'
+import { StatusLabel } from './status-label'
 
 type Props = {
   tasks: Task[]
@@ -64,7 +65,7 @@ export const TaskListTable = async ({ tasks }: Props) => {
                   : ''
               }`}
             >
-              <TableCell className="lowercase">
+              <TableCell className="capitalize">
                 {formatTime(task.createdAt)}
               </TableCell>
               <TableCell className="min-h-64 text-nowrap">
@@ -107,13 +108,7 @@ export const TaskListTable = async ({ tasks }: Props) => {
                 </Dialog>
               </TableCell>
               <TableCell>
-                <div className="flex items-center gap-2">
-                  <div
-                    className="size-2.5 rounded-full shrink-0"
-                    style={{ backgroundColor: getStatusColor(task.status) }}
-                  />
-                  {task.status}
-                </div>
+                <StatusLabel status={task.status} />
               </TableCell>
 
               <TableCell className="lowercase">
