@@ -23,7 +23,7 @@ export const createTask = async (userId: string, data: TaskFormType) => {
 export const listDoingTasks = async (userId: string) => {
   try {
     const doingTasks = await db.task.findMany({
-      where: { id: userId, status: 'Fazendo' },
+      where: { userId: userId, status: 'Fazendo' },
       orderBy: { createdAt: 'desc' },
     })
     revalidatePath('/')
