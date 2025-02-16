@@ -3,7 +3,6 @@ import { TaskChartArea } from '@/components/chart/task-chart-area'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
-import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
 import { TaskDoingTable } from '@/components/task/tasks-doing-table'
 import { Button } from '@/components/ui/button'
 import {
@@ -68,12 +67,9 @@ const Home = async () => {
             <div className="h-full flex flex-col gap-4 p-5">
               <Card className="h-full flex flex-col bg-transparent border-none">
                 <CardHeader className="pt-0 px-0">
-                  <div className="flex items-center justify-between gap-6">
-                    <CardTitle>Últimas tarefas criadas</CardTitle>
-                    <DeleteAllTaskButton />
-                  </div>
+                  <CardTitle>Tarefas em andamento</CardTitle>
                   <CardDescription className="sr-only">
-                    Conclua todas e garanta a produtividade do dia.
+                    Lista de tarefas em andamento.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 px-0">

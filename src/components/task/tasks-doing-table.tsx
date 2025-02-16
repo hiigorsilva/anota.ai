@@ -30,7 +30,7 @@ export const TaskDoingTable = async ({ tasksDoing }: Props) => {
             Título da tarefa
           </TableHead>
           <TableHead className="w-40 text-nowrap">Status</TableHead>
-          <TableHead className="w-10 text-nowrap">Status</TableHead>
+          <TableHead className="w-10 text-nowrap">{''}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
