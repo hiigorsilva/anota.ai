@@ -1,11 +1,14 @@
 'use client'
 
+import { updateTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import type { Task } from '@prisma/client'
 import { Loader2Icon, PencilIcon } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { StatusSelectItem } from '../form/status-select-item'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -38,7 +41,7 @@ import { Textarea } from '../ui/textarea'
 
 type Props = {
   children: ReactNode
-  currentTask: TaskFormType
+  currentTask: Task
 }
 
 export const EditTaskDialog = ({ children, currentTask }: Props) => {
@@ -53,7 +56,23 @@ export const EditTaskDialog = ({ children, currentTask }: Props) => {
 
   const [open, setOpen] = useState(false)
 
-  const onSubmit = async () => {}
+  const onSubmitEditTask = async (newTask: TaskFormType) => {
+    try {
+      const updateTask = await updateTaskAction(currentTask, newTask)
+      if (!updateTask.success) {
+        toast.error(updateTask.message)
+        return
+      }
+
+      toast.success(updateTask.message)
+    } catch (err) {
+      console.error('❌ UPDATE_TASK_ERROR', err)
+      toast.error('Ops! Houve um erro. Tente novamente mais tarde')
+    } finally {
+      setOpen(false)
+      form.reset()
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
@@ -75,7 +94,7 @@ export const EditTaskDialog = ({ children, currentTask }: Props) => {
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmitEditTask)}
             className="w-full flex flex-wrap items-center gap-6"
           >
             {/* TITLE */}

@@ -6,6 +6,7 @@ import {
   deleteAllTask,
   deleteTask,
   listDoingTasks,
+  updateTask,
 } from '@/services/db/task'
 import type { Task } from '@prisma/client'
 import { sessionUser } from '../auth'
@@ -47,6 +48,34 @@ export const createTaskAction = async (data: TaskFormType) => {
     return {
       success: false,
       message: 'Erro ao criar tarefa',
+    }
+  }
+}
+
+export const updateTaskAction = async (
+  currentTask: Task,
+  newTask: TaskFormType
+) => {
+  try {
+    const session = await sessionUser()
+    if (!session.id) {
+      return {
+        success: false,
+        message: 'Usuário não autenticado',
+      }
+    }
+
+    await updateTask(session.id, currentTask, newTask)
+
+    return {
+      success: true,
+      message: 'Tarefa editada com sucesso',
+    }
+  } catch (err) {
+    console.error('❌ DELETE_TASK_ERROR', err)
+    return {
+      success: false,
+      message: 'Erro ao editar tarefa',
     }
   }
 }

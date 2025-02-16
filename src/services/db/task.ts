@@ -1,5 +1,6 @@
 import { db } from '@/lib/db'
 import type { TaskFormType } from '@/schemas/task-form-schema'
+import type { Task } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const listDoingTasks = async (userId: string) => {
@@ -32,6 +33,30 @@ export const createTask = async (userId: string, data: TaskFormType) => {
     revalidatePath('/tasks')
   } catch (err) {
     console.error('❌ CREATE_TASK_DB_ERROR', err)
+  }
+}
+
+export const updateTask = async (
+  userId: string,
+  currentTask: Task,
+  newTask: TaskFormType
+) => {
+  try {
+    const task = await db.task.update({
+      where: { userId: userId, id: currentTask.id },
+      data: {
+        title: newTask.title,
+        description: newTask.description,
+        status: newTask.status,
+      },
+    })
+
+    revalidatePath('/')
+    revalidatePath('/tasks')
+    return task
+  } catch (err) {
+    console.error('❌ UPDATE_TASK_DB_ERROR', err)
+    return null
   }
 }
 
