@@ -29,11 +29,11 @@ export const createTaskAction = async (data: TaskFormType) => {
   }
 }
 
-export const getPenddingTasks = async () => {
+export const getDoingTasks = async () => {
   try {
     const session = await sessionUser()
     if (!session.id) {
-      return null
+      throw new Error('Unauthenticated user')
     }
 
     const doingTasks = await listDoingTasks(session.id)
