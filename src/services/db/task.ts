@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import type { Task } from '@prisma/client'
-import { revalidatePath } from 'next/cache'
+import { revalidateTasks } from '@/utils/revalidate-path'
+import { TASK_STATUS, type Task } from '@prisma/client'
 
 export const listAllTasks = async (userId: string) => {
   try {
@@ -9,8 +9,7 @@ export const listAllTasks = async (userId: string) => {
       where: { userId: userId },
       orderBy: { createdAt: 'desc' },
     })
-    revalidatePath('/')
-    revalidatePath('/tasks')
+    revalidateTasks()
 
     return allTasks
   } catch (err) {
@@ -35,8 +34,7 @@ export const listSearchTasks = async (userId: string, search: string) => {
       },
       orderBy: { createdAt: 'desc' },
     })
-    revalidatePath('/')
-    revalidatePath('/tasks')
+    revalidateTasks()
 
     return searchTasks
   } catch (err) {
@@ -51,7 +49,7 @@ export const listDoingTasks = async (userId: string) => {
       where: { userId: userId, status: 'Fazendo' },
       orderBy: { createdAt: 'desc' },
     })
-    revalidatePath('/')
+    revalidateTasks()
 
     return doingTasks
   } catch (err) {
@@ -71,8 +69,7 @@ export const createTask = async (userId: string, data: TaskFormType) => {
       },
     })
 
-    revalidatePath('/')
-    revalidatePath('/tasks')
+    revalidateTasks()
   } catch (err) {
     console.error('❌ CREATE_TASK_DB_ERROR', err)
   }
@@ -93,8 +90,7 @@ export const updateTask = async (
       },
     })
 
-    revalidatePath('/')
-    revalidatePath('/tasks')
+    revalidateTasks()
     return task
   } catch (err) {
     console.error('❌ UPDATE_TASK_DB_ERROR', err)
@@ -108,8 +104,7 @@ export const deleteTask = async (userId: string, task: TaskFormType) => {
       where: { userId: userId, id: task.id },
     })
 
-    revalidatePath('/')
-    revalidatePath('/tasks')
+    revalidateTasks()
   } catch (err) {
     console.error('❌ DELETE_TASK_DB_ERROR', err)
   }
@@ -121,9 +116,51 @@ export const deleteAllTask = async (userId: string) => {
       where: { userId: userId },
     })
 
-    revalidatePath('/')
-    revalidatePath('/tasks')
+    revalidateTasks()
   } catch (err) {
     console.error('❌ DELETE_TASK_DB_ERROR', err)
+  }
+}
+
+export const countTasks = async (userId: string) => {
+  try {
+    const contTasks = await Promise.all([
+      db.task.count({
+        where: {
+          userId: userId,
+          status: TASK_STATUS.Pendente,
+        },
+      }),
+
+      db.task.count({
+        where: {
+          userId: userId,
+          status: TASK_STATUS.Fazendo,
+        },
+      }),
+
+      db.task.count({
+        where: {
+          userId: userId,
+          status: TASK_STATUS.Concluído,
+        },
+      }),
+
+      db.task.count({
+        where: {
+          userId: userId,
+          status: TASK_STATUS.Cancelado,
+        },
+      }),
+    ])
+
+    return {
+      pending: contTasks[0],
+      doing: contTasks[1],
+      completed: contTasks[2],
+      canceled: contTasks[3],
+    }
+  } catch (err) {
+    console.error('❌ COUNT_TASKS_DB_ERROR', err)
   }
 }
