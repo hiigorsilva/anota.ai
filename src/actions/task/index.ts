@@ -5,11 +5,45 @@ import {
   createTask,
   deleteAllTask,
   deleteTask,
+  listAllTasks,
   listDoingTasks,
+  listSearchTasks,
   updateTask,
 } from '@/services/db/task'
 import type { Task } from '@prisma/client'
 import { sessionUser } from '../auth'
+
+export const getAllTasksAction = async () => {
+  try {
+    const session = await sessionUser()
+    if (!session.id) {
+      throw new Error('Unauthenticated user')
+    }
+
+    const tasks = await listAllTasks(session.id)
+
+    return tasks
+  } catch (err) {
+    console.error('❌ LIST_ALL_TASKS_ERROR', err)
+    return null
+  }
+}
+
+export const getSearchTasksAction = async (search: string) => {
+  try {
+    const session = await sessionUser()
+    if (!session.id) {
+      throw new Error('Unauthenticated user')
+    }
+
+    const tasks = await listSearchTasks(session.id, search)
+
+    return tasks
+  } catch (err) {
+    console.error('❌ LIST_SEARCH_TASKS_ERROR', err)
+    return null
+  }
+}
 
 export const getDoingTasksAction = async () => {
   try {

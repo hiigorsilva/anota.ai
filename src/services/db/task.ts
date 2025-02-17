@@ -3,6 +3,46 @@ import type { TaskFormType } from '@/schemas/task-form-schema'
 import type { Task } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
+export const listAllTasks = async (userId: string) => {
+  try {
+    const allTasks = await db.task.findMany({
+      where: { userId: userId },
+      orderBy: { createdAt: 'desc' },
+    })
+    revalidatePath('/')
+    revalidatePath('/tasks')
+
+    return allTasks
+  } catch (err) {
+    console.error('❌ LIST_ALL_TASKS_DB_ERROR', err)
+    return null
+  }
+}
+
+export const listSearchTasks = async (userId: string, search: string) => {
+  try {
+    const searchTasks = await db.task.findMany({
+      where: {
+        userId: userId,
+        OR: [
+          {
+            title: { contains: search },
+            description: { contains: search },
+          },
+        ],
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+    revalidatePath('/')
+    revalidatePath('/tasks')
+
+    return searchTasks
+  } catch (err) {
+    console.error('❌ LIST_SEARCH_TASKS_DB_ERROR', err)
+    return null
+  }
+}
+
 export const listDoingTasks = async (userId: string) => {
   try {
     const doingTasks = await db.task.findMany({

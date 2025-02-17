@@ -1,3 +1,4 @@
+import { getAllTasksAction, getSearchTasksAction } from '@/actions/task'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
@@ -5,7 +6,19 @@ import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
 import { TaskListTable } from '@/components/task/task-list-table'
 import { PlusIcon } from 'lucide-react'
 
-const TasksPage = async () => {
+type Props = {
+  searchParams: {
+    search?: string
+  }
+}
+
+const TasksPage = async ({ searchParams }: Props) => {
+  const { search } = searchParams
+
+  const tasks = search
+    ? await getSearchTasksAction(search)
+    : await getAllTasksAction()
+
   return (
     <div className="flex flex-col gap-6 min-h-dvh h-full w-full">
       <Navbar />
@@ -29,7 +42,14 @@ const TasksPage = async () => {
 
         {/* TASKS TABLE */}
         <div className="border rounded-md">
-          <TaskListTable tasks={tasks} />
+          {tasks && <TaskListTable tasks={tasks} />}
+
+          {/* TASKS NOT FOUND */}
+          {tasks?.length === 0 && (
+            <div className="p-4 text-center text-muted-foreground">
+              Nenhuma tarefa encontrada
+            </div>
+          )}
         </div>
       </ContainerApp>
     </div>

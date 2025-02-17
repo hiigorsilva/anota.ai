@@ -37,7 +37,7 @@ export const TaskDoingTable = async ({ tasksDoing }: Props) => {
         {tasksDoing &&
           tasksDoing.map(task => <TaskDoingItem key={task.id} task={task} />)}
 
-        {!tasksDoing && <TaskDoingNotFound />}
+        {tasksDoing?.length === 0 && <TaskDoingNotFound />}
       </TableBody>
     </Table>
   )
@@ -83,7 +83,7 @@ export const TaskDoingNotFound = () => {
   return (
     <TableRow>
       <TableCell colSpan={4}>
-        <div className="flex flex-col items-center gap-3 text-muted-foreground">
+        <div className="flex flex-col items-center gap-3 text-muted-foreground py-16">
           <NotebookPenIcon
             strokeWidth={1.5}
             className="text-muted-foreground size-8"

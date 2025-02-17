@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { type SearchType, searchSchema } from '@/schemas/search-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SearchIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from './ui/button'
@@ -32,23 +32,26 @@ export const Search = ({ className }: Props) => {
   })
 
   const router = useRouter()
-
+  const searchParams = useSearchParams()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const down = (e: KeyboardEvent) => {
+    const openSearchDialog = (e: KeyboardEvent) => {
       if (e.key === '/' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
         setOpen(open => !open)
       }
     }
 
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
+    document.addEventListener('keydown', openSearchDialog)
+    return () => document.removeEventListener('keydown', openSearchDialog)
   }, [])
 
-  const onSubmit = (data: SearchType) => {
-    router.push(`/tasks/${data.search}`)
+  const onSearchSubmit = (data: SearchType) => {
+    const params = new URLSearchParams(searchParams.toString()) // Mantém outros params da URL
+    params.set('search', data.search) // Adiciona o termo de pesquisa
+
+    router.push(`/tasks?${params.toString()}`)
   }
 
   return (
@@ -75,7 +78,7 @@ export const Search = ({ className }: Props) => {
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSearchSubmit)}
             className="flex items-center gap-4"
           >
             <FormField
