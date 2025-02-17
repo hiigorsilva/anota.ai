@@ -11,7 +11,7 @@ import {
 
 type Props = {
   countTasks: {
-    pendding: number
+    pending: number
     doing: number
     completed: number
     canceled: number
@@ -22,7 +22,7 @@ export const TaskBarChart = ({ countTasks }: Props) => {
   const chartData = [
     {
       status: 'Pendente',
-      count: countTasks.pendding,
+      count: countTasks.pending,
       fill: getStatusColor('Pendente'),
     },
     {

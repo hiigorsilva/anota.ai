@@ -124,7 +124,7 @@ export const deleteAllTask = async (userId: string) => {
 
 export const countTasks = async (userId: string) => {
   try {
-    const contTasks = await Promise.all([
+    const countTasks = await Promise.all([
       db.task.count({
         where: {
           userId: userId,
@@ -155,10 +155,10 @@ export const countTasks = async (userId: string) => {
     ])
 
     return {
-      pending: contTasks[0],
-      doing: contTasks[1],
-      completed: contTasks[2],
-      canceled: contTasks[3],
+      pending: countTasks[0],
+      doing: countTasks[1],
+      completed: countTasks[2],
+      canceled: countTasks[3],
     }
   } catch (err) {
     console.error('❌ COUNT_TASKS_DB_ERROR', err)

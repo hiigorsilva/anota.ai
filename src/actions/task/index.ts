@@ -173,12 +173,15 @@ export const countTasksAction = async () => {
     }
 
     const count = await countTasks(session.id)
+    if (!count) {
+      return null
+    }
 
     return {
-      pendding: count?.pending ?? 0,
-      doing: count?.doing ?? 0,
-      completed: count?.completed ?? 0,
-      canceled: count?.canceled ?? 0,
+      pending: count.pending,
+      doing: count.doing,
+      completed: count.completed,
+      canceled: count.canceled,
     }
   } catch (err) {
     console.error('❌ COUNT_TASKS_ERROR', err)
