@@ -2,6 +2,7 @@
 
 import type { TaskFormType } from '@/schemas/task-form-schema'
 import {
+  countTasks,
   createTask,
   deleteAllTask,
   deleteTask,
@@ -161,5 +162,25 @@ export const deleteAllTaskAction = async () => {
       success: false,
       message: 'Erro ao excluir todas as tarefas',
     }
+  }
+}
+
+export const countTasksAction = async () => {
+  try {
+    const session = await sessionUser()
+    if (!session.id) {
+      throw new Error('Unauthenticated user')
+    }
+
+    const count = await countTasks(session.id)
+
+    return {
+      pendding: count?.pending ?? 0,
+      doing: count?.doing ?? 0,
+      completed: count?.completed ?? 0,
+      canceled: count?.canceled ?? 0,
+    }
+  } catch (err) {
+    console.error('❌ COUNT_TASKS_ERROR', err)
   }
 }
