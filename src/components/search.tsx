@@ -37,7 +37,7 @@ export const Search = ({ className }: Props) => {
 
   useEffect(() => {
     const openSearchDialog = (e: KeyboardEvent) => {
-      if (e.key === '/' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === '/') {
         e.preventDefault()
         setOpen(open => !open)
       }
@@ -52,10 +52,11 @@ export const Search = ({ className }: Props) => {
     params.set('search', data.search) // Adiciona o termo de pesquisa
 
     router.push(`/tasks?${params.toString()}`)
+    setOpen(false)
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild className={cn('w-full', className)}>
         <Button
           variant="outline"
