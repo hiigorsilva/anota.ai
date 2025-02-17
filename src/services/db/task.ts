@@ -27,6 +27,8 @@ export const listSearchTasks = async (userId: string, search: string) => {
         OR: [
           {
             title: { contains: search },
+          },
+          {
             description: { contains: search },
           },
         ],
