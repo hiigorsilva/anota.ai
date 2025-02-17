@@ -4,7 +4,9 @@ import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
 import { TaskListTable } from '@/components/task/task-list-table'
-import { PlusIcon } from 'lucide-react'
+import { NotebookIcon, PlusIcon } from 'lucide-react'
+import Link from 'next/link'
+import { TitleTaskPage } from './component/title-task-page'
 
 type Props = {
   searchParams: {
@@ -26,9 +28,7 @@ const TasksPage = async ({ searchParams }: Props) => {
       <ContainerApp className="flex flex-col flex-1 gap-6">
         {/* TITLE PAGE */}
         <div className="flex justify-between items-center gap-6">
-          <h1 className="font-semibold text-xl text-foreground tracking-tight">
-            Minhas tarefas
-          </h1>
+          <TitleTaskPage search={search} />
 
           <div className="flex items-center gap-2">
             {/* MODAL */}
@@ -36,7 +36,7 @@ const TasksPage = async ({ searchParams }: Props) => {
               <PlusIcon className="size-4 shrink-0" />
               Adicionar
             </AddTaskFormModal>
-            <DeleteAllTaskButton />
+            {!search && <DeleteAllTaskButton />}
           </div>
         </div>
 
@@ -45,11 +45,22 @@ const TasksPage = async ({ searchParams }: Props) => {
           {tasks && <TaskListTable tasks={tasks} />}
 
           {/* TASKS NOT FOUND */}
-          {tasks?.length === 0 && (
-            <div className="p-4 text-center text-muted-foreground">
-              Nenhuma tarefa encontrada
-            </div>
-          )}
+          {!tasks ||
+            (tasks.length === 0 && (
+              <div className="flex flex-col items-center gap-4 p-8 text-center text-muted-foreground">
+                <div className="flex flex-col items-center gap-2">
+                  <NotebookIcon
+                    strokeWidth={1}
+                    className="text-muted-foreground size-8"
+                  />
+                  Nenhuma tarefa encontrada
+                </div>
+
+                <Link href="/tasks" className="text-sm hover:underline">
+                  Ver todas as tarefas
+                </Link>
+              </div>
+            ))}
         </div>
       </ContainerApp>
     </div>
