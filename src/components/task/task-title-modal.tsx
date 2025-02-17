@@ -16,7 +16,8 @@ type Props = {
 }
 
 export const TaskTitleModal = ({ task }: Props) => {
-  const colorLabelTitle = task.status === 'Cancelado' ? 'text-red-500' : ''
+  const colorLabelTitle =
+    task.status === 'Cancelado' ? 'line-through text-red-500' : ''
 
   return (
     <Dialog>
