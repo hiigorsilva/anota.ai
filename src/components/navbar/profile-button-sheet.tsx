@@ -1,8 +1,10 @@
 'use client'
 
 import type { User } from '@prisma/client'
+import { redirect } from 'next/navigation'
 import { type ReactNode, useState } from 'react'
 import { ToggleTheme } from '../toggle-theme'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Separator } from '../ui/separator'
 import {
@@ -24,18 +26,34 @@ type Props = {
 export const ProfileButtonSheet = ({ user, children }: Props) => {
   const [open, setOpen] = useState(false)
 
+  if (!user) {
+    redirect('/sign-in')
+  }
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col gap-6">
-        <SheetHeader>
-          <SheetTitle>Olá, {user?.name ?? 'Bem vindo'} 😉</SheetTitle>
-          <SheetDescription>
-            <span className="w-fit text-xs text-muted-foreground bg-foreground/10 px-2.5 py-0.5 rounded-full">
-              {user?.email ?? ''}
-            </span>
-          </SheetDescription>
-        </SheetHeader>
+        <div className="flex items-center gap-2">
+          <Avatar className="size-12 shrink-0">
+            <AvatarImage
+              src={user.image ?? `http://avatar.vercel.sh/${user.name}.png`}
+              alt="Avatar do usuário"
+            />
+            <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+          </Avatar>
+
+          <SheetHeader>
+            <SheetTitle className="leading-none">
+              Olá, {user.name ?? 'Bem vindo'} 😉
+            </SheetTitle>
+            <SheetDescription>
+              <span className="w-fit text-xs text-muted-foreground bg-foreground/10 px-2.5 py-0.5 rounded-full">
+                {user.email ?? ''}
+              </span>
+            </SheetDescription>
+          </SheetHeader>
+        </div>
 
         <Separator />
 
