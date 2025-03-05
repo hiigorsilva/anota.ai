@@ -1,16 +1,7 @@
 'use server'
 
 import type { TaskFormType } from '@/schemas/task-form-schema'
-import {
-  countTasks,
-  createTask,
-  deleteAllTask,
-  deleteTask,
-  listAllTasks,
-  listDoingTasks,
-  listSearchTasks,
-  updateTask,
-} from '@/services/db/task'
+import * as taskService from '@/services/db/task'
 import type { Task } from '@prisma/client'
 import { sessionUser } from '../auth'
 
@@ -21,7 +12,7 @@ export const getAllTasksAction = async () => {
       throw new Error('Unauthenticated user')
     }
 
-    const tasks = await listAllTasks(session.id)
+    const tasks = await taskService.listAllTasks(session.id)
 
     return tasks
   } catch (err) {
@@ -37,7 +28,7 @@ export const getSearchTasksAction = async (search: string) => {
       throw new Error('Unauthenticated user')
     }
 
-    const tasks = await listSearchTasks(session.id, search)
+    const tasks = await taskService.listSearchTasks(session.id, search)
 
     return tasks
   } catch (err) {
@@ -53,7 +44,7 @@ export const getDoingTasksAction = async () => {
       throw new Error('Unauthenticated user')
     }
 
-    const doingTasks = await listDoingTasks(session.id)
+    const doingTasks = await taskService.listDoingTasks(session.id)
 
     return doingTasks
   } catch (err) {
@@ -72,7 +63,7 @@ export const createTaskAction = async (data: TaskFormType) => {
       }
     }
 
-    await createTask(session.id, data)
+    await taskService.createTask(session.id, data)
 
     return {
       success: true,
@@ -100,7 +91,7 @@ export const updateTaskAction = async (
       }
     }
 
-    await updateTask(session.id, currentTask, newTask)
+    await taskService.updateTask(session.id, currentTask, newTask)
 
     return {
       success: true,
@@ -125,7 +116,7 @@ export const deleteTaskAction = async (task: Task) => {
       }
     }
 
-    await deleteTask(session.id, task)
+    await taskService.deleteTask(session.id, task)
 
     return {
       success: true,
@@ -150,7 +141,7 @@ export const deleteAllTaskAction = async () => {
       }
     }
 
-    await deleteAllTask(session.id)
+    await taskService.deleteAllTask(session.id)
 
     return {
       success: true,
@@ -172,7 +163,7 @@ export const countTasksAction = async () => {
       throw new Error('Unauthenticated user')
     }
 
-    const count = await countTasks(session.id)
+    const count = await taskService.countTasks(session.id)
     if (!count) {
       return null
     }
