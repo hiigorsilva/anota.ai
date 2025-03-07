@@ -74,10 +74,10 @@ model Task {
   title       String
   status      TASK_STATUS
   description String
+  deadline    DateTime?
 
-  deadline  DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("tasks")
 }

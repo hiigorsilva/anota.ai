@@ -26,7 +26,7 @@ export const AddTaskFormModal = ({ children }: Props) => {
       {/* MODAL CONTENT */}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>O que você está fazendo?</DialogTitle>
+          <DialogTitle>Crie uma nova tarefa</DialogTitle>
           <DialogDescription>
             Preencha os campos abaixos para criar sua tarefa.
           </DialogDescription>

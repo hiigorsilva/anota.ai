@@ -2,14 +2,18 @@
 
 import { createTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
+import { cn } from '@/lib/utils'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, PlusCircleIcon } from 'lucide-react'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { CalendarIcon, Loader2, PlusCircleIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
+import { Calendar } from '../ui/calendar'
 import {
   Form,
   FormControl,
@@ -19,6 +23,7 @@ import {
   FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import {
   Select,
   SelectContent,
@@ -41,6 +46,7 @@ export const TaskForm = ({ children, setOpen }: Props) => {
       title: '',
       status: 'Pendente',
       description: '',
+      deadline: new Date(),
     },
   })
 
@@ -111,33 +117,79 @@ export const TaskForm = ({ children, setOpen }: Props) => {
           }}
         />
 
-        {/* STATUS */}
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="w-full space-y-0">
-              <FormLabel className="sr-only">Status</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={field.value} />
-                  </SelectTrigger>
-                  <SelectContent className="w-full">
-                    <SelectGroup>
-                      {statusOptions.map(option => (
-                        <StatusSelectItem key={option.label} option={option} />
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+        <div className="w-full flex justify-between items-center gap-2">
+          {/* STATUS */}
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="w-full space-y-0">
+                <FormLabel className="sr-only">Status</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={field.value} />
+                    </SelectTrigger>
+                    <SelectContent className="w-full">
+                      <SelectGroup>
+                        {statusOptions.map(option => (
+                          <StatusSelectItem
+                            key={option.label}
+                            option={option}
+                          />
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          {/* DEADLINE DATE */}
+          <FormField
+            control={form.control}
+            name="deadline"
+            render={({ field }) => (
+              <FormItem className="w-full space-y-0">
+                <FormLabel className="sr-only">Data de conclusão</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-[240px] pl-3 text-left font-normal',
+                          !field.value && 'text-muted-foreground'
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, 'PPP', { locale: ptBR })
+                        ) : (
+                          <span>Selecione uma data</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={date => date < new Date()}
+                      initialFocus
+                      locale={ptBR}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="w-full flex items-center gap-2">
           {/* CANCEL BUTTON */}
