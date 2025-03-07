@@ -47,8 +47,10 @@ const Home = async () => {
                 <CardContent className="px-0">
                   {/* MODAL */}
                   <AddTaskFormModal>
-                    <PlusIcon className="size-4 shrink-0" />
-                    Adicionar tarefa
+                    <Button>
+                      <PlusIcon className="size-4 shrink-0" />
+                      Adicionar tarefa
+                    </Button>
                   </AddTaskFormModal>
                 </CardContent>
               </Card>

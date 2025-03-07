@@ -4,6 +4,7 @@ import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import { DeleteAllTaskButton } from '@/components/task/delete-all-task-button'
 import { TaskListTable } from '@/components/task/task-list-table'
+import { Button } from '@/components/ui/button'
 import { NotebookIcon, PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { TitleTaskPage } from './component/title-task-page'
@@ -33,8 +34,10 @@ const TasksPage = async ({ searchParams }: Props) => {
           <div className="flex items-center gap-2">
             {/* MODAL */}
             <AddTaskFormModal>
-              <PlusIcon className="size-4 shrink-0" />
-              Adicionar
+              <Button>
+                <PlusIcon className="size-4 shrink-0" />
+                Adicionar
+              </Button>
             </AddTaskFormModal>
             {!search && <DeleteAllTaskButton />}
           </div>

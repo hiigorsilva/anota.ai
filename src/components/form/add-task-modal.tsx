@@ -22,9 +22,7 @@ export const AddTaskFormModal = ({ children }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-      <DialogTrigger asChild>
-        <Button>{children}</Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       {/* MODAL CONTENT */}
       <DialogContent>
         <DialogHeader>
