@@ -15,7 +15,7 @@ export const sessionUser = async () => {
   const session = await auth()
 
   if (!session?.user) {
-    redirect('/sign-in')
+    return redirect('/sign-in')
   }
 
   return session.user
