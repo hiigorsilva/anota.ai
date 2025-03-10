@@ -2,18 +2,14 @@
 
 import { createTaskAction } from '@/actions/task'
 import { statusOptions } from '@/data/task/status-options'
-import { cn } from '@/lib/utils'
 import { type TaskFormType, taskFormSchema } from '@/schemas/task-form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
-import { CalendarIcon, Loader2, PlusCircleIcon } from 'lucide-react'
+import { Loader2, PlusCircleIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
-import { Calendar } from '../ui/calendar'
 import {
   Form,
   FormControl,
@@ -23,7 +19,7 @@ import {
   FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import {} from '../ui/popover'
 import {
   Select,
   SelectContent,
@@ -46,7 +42,6 @@ export const TaskForm = ({ children, setOpen }: Props) => {
       title: '',
       status: 'Pendente',
       description: '',
-      deadline: new Date(),
     },
   })
 
@@ -145,47 +140,6 @@ export const TaskForm = ({ children, setOpen }: Props) => {
                     </SelectContent>
                   </Select>
                 </FormControl>
-              </FormItem>
-            )}
-          />
-
-          {/* DEADLINE DATE */}
-          <FormField
-            control={form.control}
-            name="deadline"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-0">
-                <FormLabel className="sr-only">Data de conclusão</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={'outline'}
-                        className={cn(
-                          'w-[240px] pl-3 text-left font-normal',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, 'PPP', { locale: ptBR })
-                        ) : (
-                          <span>Selecione uma data</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={date => date < new Date()}
-                      initialFocus
-                      locale={ptBR}
-                    />
-                  </PopoverContent>
-                </Popover>
               </FormItem>
             )}
           />

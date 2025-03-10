@@ -1,7 +1,4 @@
 'use client'
-
-import { AddTaskFormModal } from '@/components/form/add-task-modal'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import type { Task } from '@prisma/client'
@@ -14,7 +11,6 @@ import {
   startOfMonth,
 } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { DAYS_OF_WEEK } from '../data/week-days'
 import { SelectMonthCalendar } from './select-month-calendar'
@@ -103,17 +99,6 @@ export const Calendar = ({ tasks }: CalendarProps) => {
               >
                 {date.getDate()}
               </div>
-
-              {/* BUTTON ADD NEW TASK */}
-              <AddTaskFormModal>
-                <Button
-                  className=" w-8 h-8 bg-card border hover:border-zinc-50/15 rounded transition z-10 hidden group-[:hover]:flex"
-                  variant="secondary"
-                  size="icon"
-                >
-                  <PlusIcon className="size-4 shrink-0 text-muted-foreground" />
-                </Button>
-              </AddTaskFormModal>
             </div>
 
             <ScrollArea className="relative max-h-52 h-full p-0 ">
