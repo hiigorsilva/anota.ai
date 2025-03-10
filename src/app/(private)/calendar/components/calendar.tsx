@@ -122,16 +122,13 @@ export const Calendar = ({ tasks }: CalendarProps) => {
                 {(
                   taskGroupedByDate[format(date, 'PPP', { locale: ptBR })] || []
                 ).map(task => (
-                  <div
-                    key={task.id}
-                    className="space-y-0.5 p-1 rounded bg-muted-foreground/15 border border-muted-foreground/25 backdrop-blur-sm transition-all cursor-pointer hover:brightness-125"
-                  >
-                    <TaskTitleCalendar task={task}>
+                  <TaskTitleCalendar key={task.id} task={task}>
+                    <div className="space-y-0.5 p-1 rounded bg-muted-foreground/15 border border-muted-foreground/25 backdrop-blur-sm transition-all cursor-pointer hover:brightness-125">
                       <h3 className="font-semibold text-sm leading-none truncate text-left p-0.5">
                         {task.title}
                       </h3>
-                    </TaskTitleCalendar>
-                  </div>
+                    </div>
+                  </TaskTitleCalendar>
                 ))}
               </div>
             </ScrollArea>
