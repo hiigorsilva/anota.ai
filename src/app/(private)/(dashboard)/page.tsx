@@ -4,6 +4,7 @@ import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
 import { Navbar } from '@/components/navbar'
 import { TaskDoingTable } from '@/components/task/tasks-doing-table'
+import { TitlePageRoot, TitlePageText } from '@/components/title-page'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -25,10 +26,14 @@ const Home = async () => {
   const doingTaks = await getDoingTasksAction()
 
   return (
-    <div className="flex flex-col min-h-dvh h-full w-full">
+    <div className="flex flex-col gap-6 min-h-dvh h-full w-full">
       <Navbar />
 
-      <ContainerApp className="flex flex-col flex-1">
+      <ContainerApp className="flex flex-col flex-1 gap-6">
+        <TitlePageRoot>
+          <TitlePageText>Dashboard</TitlePageText>
+        </TitlePageRoot>
+
         <ResizablePanelGroup
           direction="horizontal"
           className="w-full min-h-full flex-1 rounded-md border"

@@ -1,4 +1,9 @@
 'use client'
+import {
+  TitlePageIcon,
+  TitlePageRoot,
+  TitlePageText,
+} from '@/components/title-page'
 import { Card } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import type { Task } from '@prisma/client'
@@ -11,6 +16,7 @@ import {
   startOfMonth,
 } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { ArrowLeftIcon } from 'lucide-react'
 import { useState } from 'react'
 import { DAYS_OF_WEEK } from '../data/week-days'
 import { SelectMonthCalendar } from './select-month-calendar'
@@ -52,9 +58,19 @@ export const Calendar = ({ tasks }: CalendarProps) => {
 
   return (
     <div className="w-full space-y-6">
-      <header className="flex flex-wrap items-center gap-6">
+      <header className="flex flex-wrap items-center justify-between gap-6">
+        <TitlePageRoot>
+          <TitlePageIcon>
+            <ArrowLeftIcon className="text-muted-foreground size-4 shrink-0" />
+          </TitlePageIcon>
+          <TitlePageText>Calendário de tarefas</TitlePageText>
+        </TitlePageRoot>
+
         <div className="flex items-center gap-2">
-          <span>Data: </span>
+          <span>Período</span>
+
+          {/* MONTH */}
+          <SelectMonthCalendar month={month} setMonth={setMonth} />
 
           {/* YEAR */}
           <SelectYearCalendar
@@ -62,9 +78,6 @@ export const Calendar = ({ tasks }: CalendarProps) => {
             setYear={setYear}
             year={year}
           />
-
-          {/* MONTH */}
-          <SelectMonthCalendar month={month} setMonth={setMonth} />
         </div>
       </header>
 
