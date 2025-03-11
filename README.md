@@ -46,7 +46,7 @@
   </tbody>
 </table>
 
-## Bibliotecas
+## Principais bibliotecas
 - **AuthJS:** Autenticação
 - **Prisma ORM:** Interação com Banco de dados
 - **Husky:** GitHooks e automatizações no desenvolvimento
