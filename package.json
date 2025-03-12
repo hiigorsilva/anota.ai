@@ -6,7 +6,6 @@
     "name": "Higor Silva Soares",
     "url": "https://github.com/hiigorsilva/anota.ai"
   },
-  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
