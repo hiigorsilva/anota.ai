@@ -4,6 +4,8 @@ import { Navbar } from '@/components/navbar'
 import {} from '@/components/title-page'
 import { Calendar } from './components/calendar'
 
+export const dynamic = 'force-dynamic'
+
 const CalendarPage = async () => {
   const tasks = await getAllTasksAction()
 

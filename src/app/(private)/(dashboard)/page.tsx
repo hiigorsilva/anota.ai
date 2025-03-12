@@ -22,6 +22,8 @@ import {
 import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 const Home = async () => {
   const doingTaks = await getDoingTasksAction()
   const countTasks = await countTasksAction()
