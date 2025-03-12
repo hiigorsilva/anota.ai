@@ -65,7 +65,7 @@ export const Search = ({ className }: Props) => {
           <SearchIcon className="text-muted-foreground size-4 shrink-0" />
           <span>Buscar tarefas</span>
           <span className="flex justify-center items-center gap-2 font-semibold uppercase w-fit px-2 h-full rounded-sm bg-muted-foreground/10">
-            ⌘ /
+            /
           </span>
         </Button>
       </DialogTrigger>
