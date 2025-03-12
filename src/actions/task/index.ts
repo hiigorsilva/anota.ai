@@ -3,6 +3,7 @@
 import type { TaskFormType } from '@/schemas/task-form-schema'
 import * as taskService from '@/services/db/task'
 import type { Task } from '@prisma/client'
+import { redirect } from 'next/navigation'
 import { sessionUser } from '../auth'
 
 export const getAllTasksAction = async () => {
@@ -160,12 +161,17 @@ export const countTasksAction = async () => {
   try {
     const session = await sessionUser()
     if (!session.id) {
-      throw new Error('Unauthenticated user')
+      return redirect('/sign-in')
     }
 
     const count = await taskService.countTasks(session.id)
     if (!count) {
-      return null
+      return {
+        pending: 0,
+        doing: 0,
+        completed: 0,
+        canceled: 0,
+      }
     }
 
     return {

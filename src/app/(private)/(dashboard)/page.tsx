@@ -1,4 +1,4 @@
-import { getDoingTasksAction } from '@/actions/task'
+import { countTasksAction, getDoingTasksAction } from '@/actions/task'
 import { TaskChartArea } from '@/components/chart/task-chart-area'
 import { ContainerApp } from '@/components/container-app'
 import { AddTaskFormModal } from '@/components/form/add-task-modal'
@@ -24,6 +24,7 @@ import Link from 'next/link'
 
 const Home = async () => {
   const doingTaks = await getDoingTasksAction()
+  const countTasks = await countTasksAction()
 
   return (
     <div className="flex flex-col gap-6 min-h-dvh h-full w-full">
@@ -62,7 +63,7 @@ const Home = async () => {
 
               {/* CHART */}
               <div className="flex flex-col h-full gap-6">
-                <TaskChartArea />
+                <TaskChartArea countTasks={countTasks} />
               </div>
             </div>
           </ResizablePanel>

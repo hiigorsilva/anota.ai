@@ -1,4 +1,3 @@
-import { countTasksAction } from '@/actions/task'
 import {
   Card,
   CardContent,
@@ -10,8 +9,18 @@ import { months } from '@/data/date/month'
 import { Badge } from '../ui/badge'
 import { TaskBarChart } from './task-bar-chart'
 
-export const TaskChartArea = async () => {
-  const countTasks = await countTasksAction()
+type CountTasks = {
+  pending: number
+  doing: number
+  completed: number
+  canceled: number
+}
+
+type TaskChartAreaProps = {
+  countTasks: CountTasks | undefined
+}
+
+export const TaskChartArea = async ({ countTasks }: TaskChartAreaProps) => {
   if (!countTasks) {
     return null
   }
