@@ -45,13 +45,16 @@ export const ProfileButtonSheet = ({ user, children }: Props) => {
 
           <SheetHeader>
             <SheetTitle className="leading-none">
-              Olá, {user.name ?? 'Bem vindo'} 😉
+              Olá, {user.name ?? 'Bem vindo(a)'} 😉
             </SheetTitle>
-            <SheetDescription>
-              <span className="w-fit text-xs text-muted-foreground bg-foreground/10 px-2.5 py-0.5 rounded-full">
-                {user.email ?? ''}
-              </span>
-            </SheetDescription>
+
+            {user.email && (
+              <SheetDescription>
+                <span className="w-fit text-xs text-muted-foreground bg-foreground/10 px-2.5 py-0.5 rounded-full">
+                  {user.email}
+                </span>
+              </SheetDescription>
+            )}
           </SheetHeader>
         </div>
 
