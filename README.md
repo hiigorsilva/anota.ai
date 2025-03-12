@@ -5,7 +5,28 @@
 
 - Com uma interface moderna e intuitiva, o app permite que o usuário crie, edite, exclua e busque tarefas, além de possibilitar a adição de status e descrição de cada uma delas.
 
-- Com o Anota AÍ, você irá ter mais produtividade e controle, menos estresse e esquecimento.
+## Como rodar o projeto?
+
+#### 1. Clone o repositório
+```bash
+git clone https://github.com/hiigorsilva/anota.ai
+```
+
+#### 2. Crie um arquivo `.env` na raíz do projeto
+Copie o arquivo `.env.example` para `.env` e preencha as variáveis conforme necessário.
+```bash
+cp .env.example .env
+```
+
+#### 3. Suba os containers do Docker
+```bash
+docker-compose up --build -d
+```
+
+#### 4. Acesse a aplicação
+```bash
+http://localhost:3000
+```
 
 ## Funcionalidades
 - Autenticação via OAuth com Google
