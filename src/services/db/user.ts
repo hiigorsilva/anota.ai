@@ -1,5 +1,6 @@
 import { db } from '@/lib/db'
 import type { EditSettingsType } from '@/schemas/edit-settings-schema'
+import { revalidatePath } from 'next/cache'
 
 export const findUserById = async (userId: string) => {
   try {
@@ -22,6 +23,7 @@ export const editUser = async (userId: string, newData: EditSettingsType) => {
         name: newData.name,
       },
     })
+    revalidatePath('/settings')
 
     return user
   } catch (err) {
